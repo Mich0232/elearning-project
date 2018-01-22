@@ -58,6 +58,7 @@ public class StudentWindow {
 	 */
 	public StudentWindow() {
 		initialize();
+		this.frame.setVisible(true);
 	}
 
 	/**
@@ -71,7 +72,7 @@ public class StudentWindow {
 		frame.getContentPane().setLayout(null);
 		
 		
-		//----- górny panel, info o u¿ytkowniku
+		//----- gÃ³rny panel, info o uÂ¿ytkowniku
 		
 		infoPanel = new JPanel();
 		infoPanel.setBackground(SystemColor.control);
@@ -100,7 +101,7 @@ public class StudentWindow {
 		
 		
 		
-		//------ stworzenie poszczególnych wygl¹dów kazdej zak³adki
+		//------ stworzenie poszczegÃ³lnych wyglÂ¹dÃ³w kazdej zakÂ³adki
         
         kartaWyslijZadanie = new JPanel();
         kartaWyslijZadanie.setBackground(SystemColor.control);
@@ -123,19 +124,19 @@ public class StudentWindow {
         kartaKontakt.setLayout(null);
         
         
-       //--------------- stworzenie zak³adek i dodanie do nich kart
+       //--------------- stworzenie zakÂ³adek i dodanie do nich kart
         
         tabbedPane.setBounds(0, 36, 478, 354);
         frame.getContentPane().add(tabbedPane);
         tabbedPane.setBorder(null);
         tabbedPane.setBackground(SystemColor.control);
-        tabbedPane.addTab("Wyœlij Zadanie", kartaWyslijZadanie);
-        tabbedPane.addTab("SprawdŸ zadania", kartaZadania);
-        tabbedPane.addTab("Podgl¹d Ocen", kartaPodgladOcen);
+        tabbedPane.addTab("WyÅ“lij Zadanie", kartaWyslijZadanie);
+        tabbedPane.addTab("SprawdÅ¸ zadania", kartaZadania);
+        tabbedPane.addTab("PodglÂ¹d Ocen", kartaPodgladOcen);
         tabbedPane.addTab("Kontakt ze studentem", kartaKontakt);
         
         
-        //------------ komponenty do 1 zak³adki
+        //------------ komponenty do 1 zakÂ³adki
         
         poleSciezka = new JTextArea();
         poleSciezka.setEditable(false);
@@ -157,20 +158,20 @@ public class StudentWindow {
         przyciskPrzegladaj.setBounds(174, 182, 126, 32);
         kartaWyslijZadanie.add(przyciskPrzegladaj);
         
-       //---------- komponenty do 2 zak³adki
+       //---------- komponenty do 2 zakÂ³adki
         
         listaZadan = new JList();
         listaZadan.setBounds(10, 11, 453, 304);
         kartaZadania.add(listaZadan);
         
-        //---------- komponenty do 3 zak³adki
+        //---------- komponenty do 3 zakÂ³adki
        
         listaOcenionych = new JList();
         listaOcenionych.setBounds(10, 11, 453, 293);
         kartaPodgladOcen.add(listaOcenionych);
        
         
-        //---------- komponenty do 4 zak³adki
+        //---------- komponenty do 4 zakÂ³adki
         
         pole_Temat = new JTextArea();
         pole_Temat.setBounds(10, 69, 453, 20);
