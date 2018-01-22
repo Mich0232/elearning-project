@@ -74,6 +74,7 @@ public class TeacherWindow {
 	 */
 	public TeacherWindow() {
 		initialize();
+		this.frame.setVisible(true);
 	}
 
 	/**
@@ -90,7 +91,7 @@ public class TeacherWindow {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
-		//----- górny panel, info o u¿ytkowniku
+		//----- gÃ³rny panel, info o uÅ¼ytkowniku
 		
 		infoPanel = new JPanel();
 		infoPanel.setBackground(SystemColor.control);
@@ -121,7 +122,7 @@ public class TeacherWindow {
 		przyciskWylogowania.setBounds(358, 7, 109, 19);
 		infoPanel.add(przyciskWylogowania);
         
-		//------ stworzenie poszczególnych wygl¹dów kazdej zak³adki
+		//------ stworzenie poszczegÃ³lnych wyglÅ¡dÃ³w kazdej zakÅ‚adki
 		
         kartaDodajZadanie = new JPanel();
         kartaDodajZadanie.setBackground(SystemColor.control);
@@ -144,7 +145,7 @@ public class TeacherWindow {
         kartaKontakt.setLayout(null);
         
         
-        //--------------- stworzenie zak³adek i dodanie do nich kart
+        //--------------- stworzenie zakÅ‚adek i dodanie do nich kart
         
         tabbedPane.setBounds(0, 36, 478, 354);
         frame.getContentPane().add(tabbedPane);
@@ -152,12 +153,12 @@ public class TeacherWindow {
         tabbedPane.setBackground(SystemColor.control);
         tabbedPane.addTab("Dodaj Zadanie", kartaDodajZadanie);
         tabbedPane.addTab("Dodaj Kolokwium", kartaKolos);
-        tabbedPane.addTab("Podgl¹d Prac", kartaPodgladPrac);
+        tabbedPane.addTab("PodglÅ¡d Prac", kartaPodgladPrac);
         tabbedPane.addTab("Kontakt ze studentem", kartaKontakt);
         
         
         
-        //------------ komponenty do 1 zak³adki
+        //------------ komponenty do 1 zakÅ‚adki
         
         poleTrescZadania = new JTextArea();
         poleTrescZadania.setFont(new Font("Times New Roman", Font.PLAIN, 12));
@@ -177,7 +178,7 @@ public class TeacherWindow {
         kartaDodajZadanie.add(przyciskWyslijZadanie);
        
         
-        //---------- komponenty do 2 zak³adki
+        //---------- komponenty do 2 zakÅ‚adki
         
         tekstIDKol = new JLabel("ID_Kolokwium:");
         tekstIDKol.setBounds(10, 7, 86, 14);
@@ -253,7 +254,7 @@ public class TeacherWindow {
         kartaKolos.add(przyciskKoniec);
      
         
-        //------ komponenty do 3 zak³adki
+        //------ komponenty do 3 zakÅ‚adki
         
         list = new JList();
         list.setBounds(10, 11, 453, 262);
@@ -263,7 +264,7 @@ public class TeacherWindow {
         przyciskPobierzWszystkie.setBounds(157, 292, 148, 23);
         kartaPodgladPrac.add(przyciskPobierzWszystkie);
        
-      //------ komponenty do 4 zak³adki
+      //------ komponenty do 4 zakÅ‚adki
         
         pole_Temat = new JTextArea();
         pole_Temat.setBounds(10, 69, 453, 20);
