@@ -67,7 +67,6 @@ public class LoginWindow {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			String accountType = DBConnector.checkLogin(loginField.getText(), passwordField.getText());
-						
 			
 			if(accountType.equals("Teacher"))
 			{

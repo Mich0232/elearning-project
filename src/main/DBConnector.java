@@ -128,13 +128,39 @@ public class DBConnector {
 		return success;
 	}
 	
-	public static void sendAnswer(int id, int result, String niu)
+	public static boolean addTask(String teacherID, String content, String group)
 	{
+		boolean success = true;
 		Statement s = createStatement(connection);
-		System.out.println("Wysylam do bazy: "+id +" "+ result + " "+niu);
-		executeUpdate(s, "INSERT INTO wyniki (ID, Result, NIU) VALUES ('"+id+"',"+result+",'"+niu+"');");
+		try
+		{
+			executeUpdate(s, "INSERT INTO `elf_task`(`Content`, `ID_Teacher`, `Group`) VALUES ('"+content+"','"+teacherID+"','"+group+"')");
+		}
+		catch (Exception e)
+		{
+			success=false;
+		}
 		
-		//closeConnection(connection, s);
+		return success;
+	}
+	
+	public static boolean addTest(String teacherID, String kolokwiumID, String group, String question, String ans1, String ans2, String ans3, String ans4)
+	{
+		boolean success = true;
+		Statement s = createStatement(connection);
+		try
+		{
+			executeUpdate(s, "INSERT IGNORE INTO `elf_test`(`ID_Test`, `ID_Teacher`, `Group`) VALUES ('"+kolokwiumID+"','"+teacherID+"','"+group+"')");
+			
+			executeUpdate(s, "INSERT INTO `elf_questions`(`ID_Question`, `ID_Test`, `Content`) "
+					+ "VALUES ((SELECT count(*) from elf_questions where ID_Test='"+kolokwiumID+"',[value-2],[value-3])");
+		}
+		catch (Exception e)
+		{
+			success=false;
+		}
+		
+		return success;
 	}
 	
 	public DBConnector()

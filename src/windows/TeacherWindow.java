@@ -17,6 +17,10 @@ import javax.swing.SwingConstants;
 import java.awt.SystemColor;
 import java.awt.Font;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
+
+import main.DBConnector;
+import main.Kolokwium;
 
 public class TeacherWindow {
 
@@ -35,8 +39,10 @@ public class TeacherWindow {
 	private JLabel tekstAlbum;
 	private JLabel tekst_tresc;
 	private JTextArea poleTresc;
+	private JTextArea poleGrupa;
 	private JButton przyciskWyslij;
 	private JTextArea poleIDKolokwium;
+	private JLabel tekstGrupa;
 	private JLabel tekstIDKol;
 	private JTextArea poleTrescPytania;
 	private JLabel tekstPytanie;
@@ -178,6 +184,13 @@ public class TeacherWindow {
         przyciskWyslijZadanie = new JButton("Wy\u015Blij zadanie");
         przyciskWyslijZadanie.setBounds(177, 283, 126, 32);
         kartaDodajZadanie.add(przyciskWyslijZadanie);
+        przyciskWyslijZadanie.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				//LoginWindow.getClient().sendTask(tekstTresc.getText());
+				tekst_tresc.setText("");
+			}
+		});
        
         
         //---------- komponenty do 2 zakładki
@@ -186,11 +199,21 @@ public class TeacherWindow {
         tekstIDKol.setBounds(10, 7, 86, 14);
         kartaKolos.add(tekstIDKol);
         
+        tekstGrupa = new JLabel("Grupa:");
+        tekstGrupa.setBounds(110, 7, 86, 14);
+        kartaKolos.add(tekstGrupa);
+        
         poleIDKolokwium = new JTextArea();
         poleIDKolokwium.setBounds(10, 23, 86, 20);
         poleIDKolokwium.setBorder(new LineBorder(new Color(0, 0, 0)));
         poleIDKolokwium.setColumns(10);
         kartaKolos.add(poleIDKolokwium);
+        
+        poleGrupa = new JTextArea();
+        poleGrupa.setBounds(110, 23, 86, 20);
+        poleGrupa.setBorder(new LineBorder(new Color(0, 0, 0)));
+        poleGrupa.setColumns(10);
+        kartaKolos.add(poleGrupa);
         
         poleTrescPytania = new JTextArea();
         poleTrescPytania.setBounds(10, 66, 453, 44);
@@ -250,11 +273,32 @@ public class TeacherWindow {
         przyciskNastepne = new JButton("Nast\u0119pne");
         przyciskNastepne.setBounds(249, 281, 110, 34);
         kartaKolos.add(przyciskNastepne);
+        przyciskNastepne.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				Kolokwium newKolokwium = new Kolokwium(poleIDKolokwium.getText(), poleGrupa.getText(), poleTrescPytania.getText(),odpowiedzNumer1.getText(),
+						odpowiedzNumer2.getText(),odpowiedzNumer3.getText(),odpowiedzNumer4.getText());
+				
+				//LoginWindow.getClient().sendTest(newKolokwium);
+				
+				poleTrescPytania.setText("");
+				odpowiedzNumer1.setText("");
+				odpowiedzNumer2.setText("");
+				odpowiedzNumer3.setText("");
+				odpowiedzNumer4.setText("");
+			}
+		});
         
         przyciskKoniec = new JButton("Koniec");
         przyciskKoniec.setBounds(110, 281, 110, 34);
         kartaKolos.add(przyciskKoniec);
-     
+        przyciskKoniec.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
         
         //------ komponenty do 3 zakładki
         
