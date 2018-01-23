@@ -44,17 +44,17 @@ public class UserClient {
 		//clientPanel = new TeacherPanel(NIU.toString());
 		
 		//loginW = new LoginWindow();
-		try
-		{
-			Socket socket = new Socket("127.0.0.1", port);
-			socket.setTcpNoDelay(true);
-			
-			socket.close();
-		}
-		catch (Exception e) 
-		{
-			System.err.println(e);
-		}
+//		try
+//		{
+//			Socket socket = new Socket("127.0.0.1", port);
+//			socket.setTcpNoDelay(true);
+//			
+//			socket.close();
+//		}
+//		catch (Exception e) 
+//		{
+//			System.err.println(e);
+//		}
 		
 		DBConnector dbConnector = new DBConnector();
 		loginW = new LoginWindow();
