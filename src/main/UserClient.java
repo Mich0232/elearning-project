@@ -29,6 +29,15 @@ public class UserClient {
 	}
 	
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	public static void main(String args[]) 
 	{
 		int port=8013;
@@ -53,18 +62,18 @@ public class UserClient {
 				
 	}
 	
-	private static void readAndAnswer(BufferedReader in, PrintWriter out, UUID NIU) throws IOException, InterruptedException
-	{
-		String str;
-
-		//*** CZYTAJ PYTANIE Z SOCKETA
-		while (!(str = in.readLine()).equals("exit"))
-		{
-			//clientPanel.setQuestionOnPanel(str);
-			//int ans = clientPanel.SendAnswerToServer();
-			//out.println(ans + "#" + NIU);
-			//out.flush();
-		}
-	}
+//	private static void readAndAnswer(BufferedReader in, PrintWriter out, UUID NIU) throws IOException, InterruptedException
+//	{
+//		String str;
+//
+//		//*** CZYTAJ PYTANIE Z SOCKETA
+//		while (!(str = in.readLine()).equals("exit"))
+//		{
+//			//clientPanel.setQuestionOnPanel(str);
+//			//int ans = clientPanel.SendAnswerToServer();
+//			//out.println(ans + "#" + NIU);
+//			//out.flush();
+//		}
+//	}
 
 }
