@@ -23,7 +23,7 @@ public class Server1TCPThread extends Thread {
 		try
 		{
 			Scanner sc = new Scanner(System.in);
-			DBConnector dbConnector = new DBConnector();
+//			DBConnector dbConnector = new DBConnector();
 			
 //			loginWindow = new LoginWindow();
 			

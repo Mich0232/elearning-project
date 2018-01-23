@@ -30,7 +30,7 @@ public class UserClient {
 			System.err.println(e);
 		}
 		
-//		DBConnector dbConnector = new DBConnector();
+		DBConnector dbConnector = new DBConnector();
 		loginW = new LoginWindow();
 		
 				
