@@ -16,6 +16,7 @@ public class Server1TCP {
 			try 
 			{
 				serverSocket = new ServerSocket(port);
+				System.out.println("Server 1 running...");
 				while (true) // czekanie na zgloszenie klienta
 				{
 					Socket socket = serverSocket.accept();
@@ -24,6 +25,7 @@ public class Server1TCP {
 			} 
 			catch (Exception e) 
 			{
+				System.out.println("Server 1 - ERROR");
 				System.err.println(e);
 			}
 			finally
@@ -36,7 +38,7 @@ public class Server1TCP {
 					}
 			}
 		}
-
+	
 	public int getThreadCount() {
 		return threadCount;
 	}

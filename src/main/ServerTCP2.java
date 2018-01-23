@@ -14,6 +14,7 @@ public class ServerTCP2 {
 			try
 			{
 				serverSocket = new ServerSocket(port);
+				System.out.println("Server 2 running...");
 				while (true) // czekanie na zgloszenie klienta
 				{
 					Socket socket = serverSocket.accept();
@@ -22,6 +23,7 @@ public class ServerTCP2 {
 			}
 			catch (Exception e) 
 			{
+				System.out.println("Server 2 - ERROR");
 				System.err.println(e);
 			}
 			finally
