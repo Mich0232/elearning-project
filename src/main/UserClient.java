@@ -66,6 +66,7 @@ public class UserClient {
 			PrintWriter out = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));	
 				out.println(task);
 				out.flush();
+				System.out.println(task);
 			}catch(IOException e) {
 			 // TODO Auto-generated catch block
 				System.err.println(e);

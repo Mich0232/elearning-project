@@ -36,40 +36,40 @@ public class Server1TCPThread extends Thread {
 		
 		//*********************TREŒÆ**************************************
 			
-//		try {
-//			BufferedReader in = new BufferedReader(new InputStreamReader(mySocket.getInputStream()));						
-//			control = in.readLine();
-//			
-//			
-//			} catch (IOException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-//			
-//		switch(control){
-//		case "sendTask":
-//			try {
-//				BufferedReader in = new BufferedReader(new InputStreamReader(mySocket.getInputStream()));						
-//				String task = in.readLine();
-//				System.out.println(task);
-//				
-//				} catch (IOException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				}
-//			break;
-//		case "AddTest":
-//			
-//			break;
-//		
-//		}
-//			
-//			
-//			
-//			
-//			
-//		//****************************************************************	
-//			mySocket.close();
+		try {
+			BufferedReader in = new BufferedReader(new InputStreamReader(mySocket.getInputStream()));						
+			control = in.readLine();
+			
+			
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		switch(control){
+		case "sendTask":
+			try {
+				BufferedReader in = new BufferedReader(new InputStreamReader(mySocket.getInputStream()));						
+				String task = in.readLine();
+				System.out.println(task);
+				
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			break;
+		case "AddTest":
+			
+			break;
+		
+		}
+			
+			
+			
+			
+			
+		//****************************************************************	
+			mySocket.close();
 			Server1TCPThread.currentThreads--;
 		} 
 		catch (Exception e) 
