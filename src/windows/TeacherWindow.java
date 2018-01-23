@@ -58,6 +58,7 @@ public class TeacherWindow {
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
+			@Override
 			public void run() {
 				try {
 					TeacherWindow window = new TeacherWindow();
@@ -115,6 +116,7 @@ public class TeacherWindow {
 		
 		przyciskWylogowania = new JButton("Wyloguj si\u0119");
 		przyciskWylogowania.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 			}
 		});

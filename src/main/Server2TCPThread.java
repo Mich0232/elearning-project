@@ -2,18 +2,9 @@ package main;
 
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.net.*;
-import java.util.ArrayList;
 import java.util.Scanner;
 import windows.LoginWindow;
 
@@ -26,6 +17,7 @@ public class Server2TCPThread extends Thread {
 		mySocket = socket;
 	}
 
+	@Override
 	public void run()
 	{
 		try

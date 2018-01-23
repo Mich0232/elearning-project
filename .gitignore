@@ -27,3 +27,9 @@ hs_err_pid*
 .project
 
 *.class
+
+#bin folder
+
+/bin
+/bin/*
+*.class

@@ -3,7 +3,6 @@ package main;
 
 import java.io.IOException;
 import java.net.*;
-import java.util.Scanner;
 
 import handlers.Server1Handler;
 import handlers.Server2Handler;

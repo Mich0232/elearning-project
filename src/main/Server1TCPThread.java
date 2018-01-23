@@ -2,30 +2,22 @@ package main;
 
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.net.*;
-import java.util.ArrayList;
 import java.util.Scanner;
 import windows.LoginWindow;
 
 public class Server1TCPThread extends Thread {
 	Socket mySocket;
-	LoginWindow loginWindow;
+//	LoginWindow loginWindow;
 	
 	public Server1TCPThread(Socket socket) {
 		super();
 		mySocket = socket;
 	}
 
+	@Override
 	public void run()
 	{
 		try
@@ -33,7 +25,7 @@ public class Server1TCPThread extends Thread {
 			Scanner sc = new Scanner(System.in);
 			DBConnector dbConnector = new DBConnector();
 			
-			loginWindow = new LoginWindow();
+//			loginWindow = new LoginWindow();
 			
 			System.out.println("Utworzono watek na Serwerze nr.1");
 			mySocket.close();

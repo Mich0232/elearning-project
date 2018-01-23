@@ -32,6 +32,7 @@ public class SignUpWindow {
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
+			@Override
 			public void run() {
 				try {
 					SignUpWindow window = new SignUpWindow();

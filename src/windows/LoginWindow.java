@@ -6,21 +6,16 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
-import java.awt.BorderLayout;
 import javax.swing.SwingConstants;
 
 import main.DBConnector;
 
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
 import javax.swing.JTextField;
-import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
-import javax.swing.JPanel;
 
 public class LoginWindow {
 
@@ -35,6 +30,7 @@ public class LoginWindow {
 	public static void main(String[] args) {
 		
 		EventQueue.invokeLater(new Runnable() {
+			@Override
 			public void run() {
 				try {
 					LoginWindow window = new LoginWindow();
