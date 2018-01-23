@@ -8,7 +8,7 @@ public class ServerTCP2 {
 	
 	public ServerTCP2() {
 		
-			int port=8013;
+			int port=8015;
 			ServerSocket serverSocket = null;
 			try
 			{
