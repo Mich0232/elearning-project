@@ -48,9 +48,10 @@ public class LoginWindow {
 
 	public LoginWindow() {
 		try {
-			client = new UserClient();
+			
 			initialize();
 			this.frame.setVisible(true);
+			client = new UserClient();
 		} 
 		catch (Exception e) {
 			e.printStackTrace();
@@ -67,7 +68,7 @@ public class LoginWindow {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			String accountType = DBConnector.checkLogin(loginField.getText(), passwordField.getText());
-						
+			
 			
 			if(accountType.equals("Teacher"))
 			{

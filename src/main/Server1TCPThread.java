@@ -26,9 +26,7 @@ public class Server1TCPThread extends Thread {
 		try
 		{
 			Scanner sc = new Scanner(System.in);
-//			DBConnector dbConnector = new DBConnector();
-			
-//			loginWindow = new LoginWindow();
+//			DBConnector dbConnector = new DBConnector();	
 			
 			System.out.println("Utworzono watek na Serwerze nr.1");
 			while(true) {

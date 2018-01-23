@@ -1,7 +1,11 @@
 package main;
 
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.net.*;
 
 import handlers.Server1Handler;
@@ -25,16 +29,22 @@ public class Scheduler {
 				while (true) // czekanie na zgloszenie klienta
 				{
 					Socket socket = serverSocket.accept();
-					server1_threads = Server1TCPThread.currentThreads;
-					server2_threads = Server2TCPThread.currentThreads;
 					
-					if(server1_threads <= server2_threads)
-						(new Server1TCPThread(socket)).start(); 
-					else
-						(new Server2TCPThread(socket)).start(); 
+					PrintWriter out = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));	
+
+									
+				server1_threads = Server1TCPThread.currentThreads;
+				server2_threads = Server2TCPThread.currentThreads;
+//				System.out.println(server1_threads);
+//				System.out.println(server2_threads);
 					
-					
-					
+				if(server1_threads <= server2_threads)
+					out.println("8014");
+				else
+					out.println("8015");
+				
+				out.flush();
+										
 				}
 			} 
 			catch (Exception e)
