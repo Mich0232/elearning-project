@@ -9,8 +9,25 @@ import java.util.UUID;
 import windows.LoginWindow;
 
 public class UserClient {
-	//testtttt
+	
 	private static LoginWindow loginW;
+	
+	public UserClient()
+	{
+		int port=8013;
+		try
+		{
+			Socket socket = new Socket("127.0.0.1", port);
+			socket.setTcpNoDelay(true);
+			
+			socket.close();
+		}
+		catch (Exception e) 
+		{
+			System.err.println(e);
+		}
+	}
+	
 	
 	public static void main(String args[]) 
 	{
@@ -30,7 +47,7 @@ public class UserClient {
 			System.err.println(e);
 		}
 		
-//		DBConnector dbConnector = new DBConnector();
+		DBConnector dbConnector = new DBConnector();
 		loginW = new LoginWindow();
 		
 				
