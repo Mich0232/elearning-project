@@ -134,7 +134,7 @@ public class StudentWindow {
         tabbedPane.addTab("Wyœlij Zadanie", kartaWyslijZadanie);
         tabbedPane.addTab("SprawdŸ zadania", kartaZadania);
         tabbedPane.addTab("Podgl¹d Ocen", kartaPodgladOcen);
-        tabbedPane.addTab("Kontakt ze studentem", kartaKontakt);
+        tabbedPane.addTab("Kontakt z prowadzacym", kartaKontakt);
         
         
         //------------ komponenty do 1 zak³adki

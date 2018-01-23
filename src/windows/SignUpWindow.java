@@ -26,6 +26,9 @@ public class SignUpWindow {
 	private JPasswordField repeatPasswordField;
 	private JLabel lblRepeatPassword;
 	private JComboBox comboBox;
+	private JTextField nameField;
+	private JTextField surnameField;
+	private JTextField groupText;
 
 	/**
 	 * Launch the application.
@@ -64,7 +67,7 @@ public class SignUpWindow {
 		public void actionPerformed(ActionEvent e) {
 			if(passwordField.getText().equals(repeatPasswordField.getText()))
 			{
-				if(DBConnector.addUser(loginField.getText(), passwordField.getText(), comboBox.getSelectedItem().toString()))
+				if(DBConnector.addUser(loginField.getText(), passwordField.getText(), nameField.getText(), surnameField.getText(), groupText.getText(), comboBox.getSelectedItem().toString()))
 				{
 					JOptionPane.showMessageDialog(frame, "Account has been created.\nYou can now log in!","Success", JOptionPane.INFORMATION_MESSAGE);
 					new LoginWindow();
@@ -87,52 +90,94 @@ public class SignUpWindow {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 300);
+		frame.setBounds(100, 100, 450, 404);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
-		JLabel lblSignUp = new JLabel("Sign up");
+		JLabel lblSignUp = new JLabel("Zarejestruj sie");
 		lblSignUp.setHorizontalAlignment(SwingConstants.CENTER);
 		lblSignUp.setFont(new Font("Lucida Grande", Font.PLAIN, 16));
-		lblSignUp.setBounds(164, 16, 80, 25);
+		lblSignUp.setBounds(150, 16, 135, 25);
 		frame.getContentPane().add(lblSignUp);
 		
 		loginField = new JTextField();
-		loginField.setBounds(198, 53, 130, 26);
+		loginField.setBounds(198, 79, 130, 26);
 		frame.getContentPane().add(loginField);
 		loginField.setColumns(10);
 		
 		passwordField = new JPasswordField();
-		passwordField.setBounds(198, 91, 130, 26);
+		passwordField.setBounds(198, 117, 130, 26);
 		frame.getContentPane().add(passwordField);
 		
 		JLabel lblLogin = new JLabel("Login:");
-		lblLogin.setBounds(89, 58, 61, 16);
+		lblLogin.setBounds(89, 84, 61, 16);
 		frame.getContentPane().add(lblLogin);
 		
-		JLabel lblPassword = new JLabel("Password:");
-		lblPassword.setBounds(89, 96, 77, 16);
+		JLabel lblPassword = new JLabel("Haslo:");
+		lblPassword.setBounds(89, 122, 77, 16);
 		frame.getContentPane().add(lblPassword);
 		
 		repeatPasswordField = new JPasswordField();
-		repeatPasswordField.setBounds(198, 129, 130, 26);
+		repeatPasswordField.setBounds(198, 155, 130, 26);
 		frame.getContentPane().add(repeatPasswordField);
 		
-		lblRepeatPassword = new JLabel("Repeat password:");
-		lblRepeatPassword.setBounds(89, 134, 110, 16);
+		lblRepeatPassword = new JLabel("Powtorz haslo:");
+		lblRepeatPassword.setBounds(89, 160, 110, 16);
 		frame.getContentPane().add(lblRepeatPassword);
 		
 		JButton btnSignUp = new SignUpButton("Sign up");
-		btnSignUp.setBounds(153, 222, 102, 29);
+		btnSignUp.setBounds(153, 330, 102, 29);
 		frame.getContentPane().add(btnSignUp);
 		
 		comboBox = new JComboBox();
 		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Student", "Teacher"}));
-		comboBox.setBounds(198, 167, 130, 27);
+		comboBox.setBounds(198, 45, 130, 27);
 		frame.getContentPane().add(comboBox);
 		
-		JLabel lblType = new JLabel("Type:");
-		lblType.setBounds(89, 171, 61, 16);
+		
+		JLabel lblType = new JLabel("Typ konta:");
+		lblType.setBounds(89, 49, 77, 16);
 		frame.getContentPane().add(lblType);
+		
+		nameField = new JTextField();
+		nameField.setBounds(198, 193, 130, 26);
+		frame.getContentPane().add(nameField);
+		nameField.setColumns(10);
+		
+		surnameField = new JTextField();
+		surnameField.setBounds(198, 228, 130, 26);
+		frame.getContentPane().add(surnameField);
+		surnameField.setColumns(10);
+		
+		JLabel lblImie = new JLabel("Imie:");
+		lblImie.setBounds(89, 198, 61, 16);
+		frame.getContentPane().add(lblImie);
+		
+		JLabel lblNazwisko = new JLabel("Nazwisko:");
+		lblNazwisko.setBounds(89, 233, 77, 16);
+		frame.getContentPane().add(lblNazwisko);
+		
+		groupText = new JTextField();
+		groupText.setBounds(198, 266, 130, 26);
+		frame.getContentPane().add(groupText);
+		groupText.setColumns(10);
+		
+		JLabel groupLabel = new JLabel("Grupa:");
+		groupLabel.setBounds(89, 271, 61, 16);
+		frame.getContentPane().add(groupLabel);
+		
+		
+		comboBox.addActionListener (new ActionListener () {
+		    public void actionPerformed(ActionEvent e) {
+		        if(comboBox.getSelectedItem().equals("Student"))
+		        {
+		        	groupLabel.setText("Group:");
+		        }
+		        else
+		        {
+		        	groupLabel.setText("Subject:");
+		        }
+		    }
+		});
 	}
 }

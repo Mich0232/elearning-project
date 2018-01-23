@@ -9,8 +9,34 @@ import java.util.UUID;
 import windows.LoginWindow;
 
 public class UserClient {
-	//testtttt
+	
 	private static LoginWindow loginW;
+	
+	public UserClient()
+	{
+		int port=8013;
+		try
+		{
+			Socket socket = new Socket("127.0.0.1", port);
+			socket.setTcpNoDelay(true);
+			
+			socket.close();
+		}
+		catch (Exception e) 
+		{
+			System.err.println(e);
+		}
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	public static void main(String args[]) 
 	{
@@ -36,18 +62,18 @@ public class UserClient {
 				
 	}
 	
-	private static void readAndAnswer(BufferedReader in, PrintWriter out, UUID NIU) throws IOException, InterruptedException
-	{
-		String str;
-
-		//*** CZYTAJ PYTANIE Z SOCKETA
-		while (!(str = in.readLine()).equals("exit"))
-		{
-			//clientPanel.setQuestionOnPanel(str);
-			//int ans = clientPanel.SendAnswerToServer();
-			//out.println(ans + "#" + NIU);
-			//out.flush();
-		}
-	}
+//	private static void readAndAnswer(BufferedReader in, PrintWriter out, UUID NIU) throws IOException, InterruptedException
+//	{
+//		String str;
+//
+//		//*** CZYTAJ PYTANIE Z SOCKETA
+//		while (!(str = in.readLine()).equals("exit"))
+//		{
+//			//clientPanel.setQuestionOnPanel(str);
+//			//int ans = clientPanel.SendAnswerToServer();
+//			//out.println(ans + "#" + NIU);
+//			//out.flush();
+//		}
+//	}
 
 }

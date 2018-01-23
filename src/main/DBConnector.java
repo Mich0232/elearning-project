@@ -100,13 +100,25 @@ public class DBConnector {
 		return accountType;
 	}
 	
-	public static boolean addUser(String login, String password, String type)
+	public static boolean addUser(String login, String password, String name, String surname, String group, String type)
 	{
 		boolean success = true;
 		Statement s = createStatement(connection);
 		try
 		{
 			executeUpdate(s, "INSERT INTO elf_users (Login, Password, Type) VALUES ('"+login+"','"+password+"','"+type+"');");
+			if(type=="Student")
+			{
+				executeUpdate(s, "INSERT INTO `elf_student`(`ID_User`, `Name`, `Surname`, `StudentGroup`) "
+						+ "VALUES ((SELECT User_ID from elf_users where Login ='"+login+"'),'"+name+"','"+surname+"','"+group+"');");
+			}
+			else if(type=="Teacher")
+			{
+				executeUpdate(s, "INSERT INTO elf_teacher (Login, Password, Type) VALUES ('"+login+"','"+password+"','"+type+"');");
+				
+				executeUpdate(s, "INSERT INTO `elf_teacher`(`ID_User`, `Name`, `Surname`, `Subject`) "
+						+ "VALUES ((SELECT User_ID from elf_users where Login ='"+login+"'),'"+name+"','"+surname+"','"+group+"');");
+			}
 		}
 		catch (Exception e)
 		{

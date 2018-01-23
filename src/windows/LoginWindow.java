@@ -16,6 +16,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
+import main.UserClient;
 
 public class LoginWindow {
 
@@ -23,11 +24,14 @@ public class LoginWindow {
 	private JTextField loginField;
 	private JPasswordField passwordField;
 	private JButton btnZarejestrujSi;
+	private static UserClient client;
+
 
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
+		
 		
 		EventQueue.invokeLater(new Runnable() {
 			@Override
@@ -44,6 +48,7 @@ public class LoginWindow {
 
 	public LoginWindow() {
 		try {
+			client = new UserClient();
 			initialize();
 			this.frame.setVisible(true);
 		} 
@@ -94,6 +99,14 @@ public class LoginWindow {
 			new SignUpWindow();
 			frame.dispose();
 		}
+	}
+	
+	public static UserClient getClient() {
+		return client;
+	}
+
+	public static void setClient(UserClient client) {
+		LoginWindow.client = client;
 	}
 
 	
