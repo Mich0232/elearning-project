@@ -8,7 +8,7 @@ import java.net.*;
 import java.util.UUID;
 import windows.LoginWindow;
 
-public class UserTCP {
+public class UserClient {
 	
 	private static LoginWindow loginW;
 	
@@ -30,11 +30,10 @@ public class UserTCP {
 			System.err.println(e);
 		}
 		
-		DBConnector dbConnector = new DBConnector();
+//		DBConnector dbConnector = new DBConnector();
 		loginW = new LoginWindow();
 		
-		
-		
+				
 	}
 	
 	private static void readAndAnswer(BufferedReader in, PrintWriter out, UUID NIU) throws IOException, InterruptedException
