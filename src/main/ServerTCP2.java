@@ -6,6 +6,7 @@ import java.net.*;
 
 public class ServerTCP2 {
 	
+	
 	public ServerTCP2() {
 		
 			int port=8015;
@@ -35,4 +36,6 @@ public class ServerTCP2 {
 					}
 			}
 		}
+	
+
 }

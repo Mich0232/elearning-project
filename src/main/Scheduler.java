@@ -9,26 +9,30 @@ import handlers.Server2Handler;
 
 public class Scheduler {
 	
-	private int threadCount = 0;
-	private static Server1TCP server_1;
-	private static ServerTCP2 server_2;
+	static int server1_threads, server2_threads;
 	
 	public static void main(String[] args) {
 		
 			int port=8013;
 			ServerSocket serverSocket = null;
-			
+
 			(new Server1Handler()).start();
-			(new Server2Handler()).start();
-				
+			(new Server2Handler()).start();			
+			
 			try 
 			{
 				serverSocket = new ServerSocket(port);
 				while (true) // czekanie na zgloszenie klienta
 				{
 					Socket socket = serverSocket.accept();
-					// Sprawdz obciazenie serverow
-//					(new Server1TCPThread(socket)).start(); // tworzymy watek dla polaczenia
+					server1_threads = Server1TCPThread.currentThreads;
+					server2_threads = Server2TCPThread.currentThreads;
+					
+					if(server1_threads <= server2_threads)
+						(new Server1TCPThread(socket)).start(); 
+					else
+						(new Server2TCPThread(socket)).start(); 
+					
 				}
 			} 
 			catch (Exception e)
@@ -46,9 +50,4 @@ public class Scheduler {
 			}
 		}
 	
-
-	public int getThreadCount() {
-		return threadCount;
-	}
-
 }

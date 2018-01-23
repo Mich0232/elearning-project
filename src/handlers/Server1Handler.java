@@ -5,7 +5,7 @@ import main.Server1TCP;
 public class Server1Handler extends Thread {
 
 	private static Server1TCP server_1;
-	
+		
 	// Thread
 	@Override
 	public void run() {

@@ -9,6 +9,8 @@ import java.util.Scanner;
 import windows.LoginWindow;
 
 public class Server1TCPThread extends Thread {
+	public static int currentThreads = 0;
+	
 	Socket mySocket;
 //	LoginWindow loginWindow;
 	
@@ -20,6 +22,7 @@ public class Server1TCPThread extends Thread {
 	@Override
 	public void run()
 	{
+		Server1TCPThread.currentThreads++;
 		try
 		{
 			Scanner sc = new Scanner(System.in);
@@ -28,7 +31,13 @@ public class Server1TCPThread extends Thread {
 //			loginWindow = new LoginWindow();
 			
 			System.out.println("Utworzono watek na Serwerze nr.1");
+			while(true) {
+				if (Server1TCPThread.currentThreads > 5)
+					break;
+			}
+			
 			mySocket.close();
+			Server1TCPThread.currentThreads--;
 		} 
 		catch (Exception e) 
 		{

@@ -6,7 +6,6 @@ import java.net.*;
 
 public class Server1TCP {
 	
-	private int threadCount = 0;
 	
 	public Server1TCP() {
 		
@@ -38,8 +37,5 @@ public class Server1TCP {
 			}
 		}
 	
-	public int getThreadCount() {
-		return threadCount;
-	}
 
 }
