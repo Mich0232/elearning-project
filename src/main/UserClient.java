@@ -30,14 +30,6 @@ public class UserClient {
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
 	public static void main(String args[]) 
 	{
 		int port=8013;
