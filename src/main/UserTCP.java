@@ -1,14 +1,10 @@
 package main;
 
 
-import java.awt.EventQueue;
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.*;
-import java.util.Scanner;
 import java.util.UUID;
 import windows.LoginWindow;
 
@@ -33,6 +29,12 @@ public class UserTCP {
 		{
 			System.err.println(e);
 		}
+		
+		DBConnector dbConnector = new DBConnector();
+		loginW = new LoginWindow();
+		
+		
+		
 	}
 	
 	private static void readAndAnswer(BufferedReader in, PrintWriter out, UUID NIU) throws IOException, InterruptedException
