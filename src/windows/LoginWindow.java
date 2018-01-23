@@ -150,5 +150,7 @@ public class LoginWindow {
 		JLabel lblPassword = new JLabel("Password:");
 		lblPassword.setBounds(72, 135, 75, 16);
 		frame.getContentPane().add(lblPassword);
+		
+		DBConnector dbConnector = new DBConnector();
 	}
 }

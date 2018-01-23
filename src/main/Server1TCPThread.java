@@ -3,15 +3,19 @@ package main;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
 import java.io.PrintWriter;
 import java.net.*;
 import java.util.Scanner;
+
 import windows.LoginWindow;
 
 public class Server1TCPThread extends Thread {
 	public static int currentThreads = 0;
 	
 	Socket mySocket;
+	String control;
 //	LoginWindow loginWindow;
 	
 	public Server1TCPThread(Socket socket) {
@@ -29,18 +33,56 @@ public class Server1TCPThread extends Thread {
 //			DBConnector dbConnector = new DBConnector();	
 			
 			System.out.println("Utworzono watek na Serwerze nr.1");
-			while(true) {
-				if (Server1TCPThread.currentThreads > 5)
-					break;
-			}
+		
+		//*********************TREŒÆ**************************************
 			
-			mySocket.close();
+//		try {
+//			BufferedReader in = new BufferedReader(new InputStreamReader(mySocket.getInputStream()));						
+//			control = in.readLine();
+//			
+//			
+//			} catch (IOException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//			
+//		switch(control){
+//		case "sendTask":
+//			try {
+//				BufferedReader in = new BufferedReader(new InputStreamReader(mySocket.getInputStream()));						
+//				String task = in.readLine();
+//				System.out.println(task);
+//				
+//				} catch (IOException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
+//			break;
+//		case "AddTest":
+//			
+//			break;
+//		
+//		}
+//			
+//			
+//			
+//			
+//			
+//		//****************************************************************	
+//			mySocket.close();
 			Server1TCPThread.currentThreads--;
 		} 
 		catch (Exception e) 
 		{
 			System.err.println(e);
 		}
+		
+		
+		
+		
+		
+		
+		
 	}
 	
 	private static void askAndWaitForAnswer(PrintWriter out, BufferedReader in) throws IOException
