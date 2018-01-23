@@ -40,7 +40,6 @@ public class Server1TCPThread extends Thread {
 		try {
 			BufferedReader in = new BufferedReader(new InputStreamReader(mySocket.getInputStream()));						
 			control = in.readLine();
-			System.out.println(control);
 			switch(control){
 			case "sendTask":
 					BufferedReader getTask = new BufferedReader(new InputStreamReader(mySocket.getInputStream()));						
