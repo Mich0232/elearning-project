@@ -52,7 +52,16 @@ public class UserClient {
 	}
 		
 	public void sendTask(String task){
-		
+		String control = "sendTask";
+		try{
+			PrintWriter out = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));	
+				out.println(control);
+				out.flush();
+			}catch(IOException e) {
+			 // TODO Auto-generated catch block
+				System.err.println(e);
+			}
+			
 		try{
 			PrintWriter out = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));	
 				out.println(task);

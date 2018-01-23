@@ -175,13 +175,13 @@ public class TeacherWindow {
         poleTrescZadania.setColumns(10);
         kartaDodajZadanie.add(poleTrescZadania);
  
-        tekstTresc = new JLabel("Tre\u015B\u0107 zadania");
+        tekstTresc = new JLabel("Tresc zadania");
         tekstTresc.setFont(new Font("Times New Roman", Font.PLAIN, 20));
         tekstTresc.setHorizontalAlignment(SwingConstants.CENTER);
         tekstTresc.setBounds(135, 7, 196, 24);
         kartaDodajZadanie.add(tekstTresc);
         
-        przyciskWyslijZadanie = new JButton("Wy\u015Blij zadanie");
+        przyciskWyslijZadanie = new JButton("Wyalij zadanie");
         przyciskWyslijZadanie.setBounds(177, 283, 126, 32);
         kartaDodajZadanie.add(przyciskWyslijZadanie);
         przyciskWyslijZadanie.addActionListener(new ActionListener() {
@@ -278,8 +278,8 @@ public class TeacherWindow {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-				Kolokwium newKolokwium = new Kolokwium(poleIDKolokwium.getText(), poleGrupa.getText(), poleTrescPytania.getText(),odpowiedzNumer1.getText(),
-						odpowiedzNumer2.getText(),odpowiedzNumer3.getText(),odpowiedzNumer4.getText());
+				Kolokwium newKolokwium = new Kolokwium(poleIDKolokwium.getText(), poleGrupa.getText(), poleTrescPytania.getText(),
+						odpowiedzNumer1.getText(),odpowiedzNumer2.getText(),odpowiedzNumer3.getText(),odpowiedzNumer4.getText());
 				
 				//LoginWindow.getClient().sendTest(newKolokwium);
 				
