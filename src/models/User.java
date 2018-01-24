@@ -1,7 +1,14 @@
 package models;
 
-public class User {
+import java.io.Serializable;
 
+public class User implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	//public int UID;
 	public String name;
 	public String surname;
 	public String accountType;
@@ -9,7 +16,9 @@ public class User {
 	public String subject;
 	
 	
+	
 	public User(String name, String surname, String accountType, String group, String subject) {
+		//this.UID = UID;
 		this.name = name;
 		this.surname = surname;
 		this.accountType = accountType;

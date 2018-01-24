@@ -9,6 +9,7 @@ import java.io.PrintWriter;
 import java.net.*;
 import java.util.Scanner;
 
+import models.User;
 import windows.LoginWindow;
 
 public class Server1TCPThread extends Thread {
@@ -16,6 +17,8 @@ public class Server1TCPThread extends Thread {
 	
 	Socket mySocket;
 	String control;
+	User currentUser;
+	String work;
 //	LoginWindow loginWindow;
 	
 	public Server1TCPThread(Socket socket) {
@@ -31,15 +34,19 @@ public class Server1TCPThread extends Thread {
 		try
 		{
 			Scanner sc = new Scanner(System.in);
-//			DBConnector dbConnector = new DBConnector();	
+//			DBConnector 	
 			
 			System.out.println("Utworzono watek na Serwerze nr.1");
 		
 		//*********************TREŒÆ**************************************
-			
+		
+		control = "work";
+						
+		while(!control.equals("exit")){	
 		try {
 			BufferedReader in = new BufferedReader(new InputStreamReader(mySocket.getInputStream()));						
 			control = in.readLine();
+			
 			switch(control){
 			case "sendTask":
 					BufferedReader getTask = new BufferedReader(new InputStreamReader(mySocket.getInputStream()));						
@@ -49,7 +56,22 @@ public class Server1TCPThread extends Thread {
 			case "AddTest":
 				
 				break;
-			
+			case "sendUserData":
+				try {
+
+					ObjectInputStream userdata = new ObjectInputStream(mySocket.getInputStream());						
+					currentUser = (User)userdata.readObject();
+					
+					System.out.println(currentUser.name);
+					} catch (IOException e) {
+					// TODO Auto-generated catch block
+					System.err.println(e);
+					} catch (ClassNotFoundException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				break;
+				
 			}
 			
 			} catch (IOException e) {
@@ -57,7 +79,7 @@ public class Server1TCPThread extends Thread {
 				e.printStackTrace();
 			}
 			
-		
+		}
 			
 			
 			

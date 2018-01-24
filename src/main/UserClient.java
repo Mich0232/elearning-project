@@ -4,16 +4,20 @@ package main;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.ObjectOutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.*;
 import java.util.UUID;
+
+import models.User;
 import windows.LoginWindow;
 
 public class UserClient {
 	
 	private static LoginWindow loginW;
 	Socket socket;
+	User currentUser;
 	public UserClient()
 	{
 		int port=8013;
@@ -58,9 +62,6 @@ public class UserClient {
 				out.println(control);
 				out.flush();
 				
-				PrintWriter sendTask = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));	
-				sendTask.println(task);
-				sendTask.flush();
 			}catch(IOException e) {
 			 // TODO Auto-generated catch block
 				System.err.println(e);
@@ -87,7 +88,8 @@ public class UserClient {
 		
 	}
 
-public void AddTest(Kolokwium test){
+	
+	public void addTest(Kolokwium test){
 		
 		try{
 			PrintWriter out = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));	
@@ -100,6 +102,38 @@ public void AddTest(Kolokwium test){
 		
 	}
 	
+	public void sendUserData(User curuser){
+		this.currentUser = curuser;
+		
+		String control = "sendUserData";
+		try{
+			PrintWriter out = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));	
+				out.println(control);
+				out.flush();
+				
+			}catch(IOException e) {
+			 // TODO Auto-generated catch block
+				System.err.println(e);
+			}
+		
+		try {
+			Thread.sleep(50);
+		} catch (InterruptedException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		
+		try {
+			ObjectOutputStream userdata;
+			userdata = new ObjectOutputStream(socket.getOutputStream());
+			userdata.writeObject(currentUser);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}				
+		
+	}
 	
 //	public static void main(String args[]) 
 //	{
@@ -125,18 +159,5 @@ public void AddTest(Kolokwium test){
 //				
 //	}
 	
-//	private static void readAndAnswer(BufferedReader in, PrintWriter out, UUID NIU) throws IOException, InterruptedException
-//	{
-//		String str;
-//
-//		//*** CZYTAJ PYTANIE Z SOCKETA
-//		while (!(str = in.readLine()).equals("exit"))
-//		{
-//			//clientPanel.setQuestionOnPanel(str);
-//			//int ans = clientPanel.SendAnswerToServer();
-//			//out.println(ans + "#" + NIU);
-//			//out.flush();
-//		}
-//	}
 
 }
