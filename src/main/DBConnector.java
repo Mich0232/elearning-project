@@ -144,30 +144,35 @@ public class DBConnector {
 		return success;
 	}
 	
-	public static boolean addTest(String teacherID, String kolokwiumID, String group, String question, String ans1, String ans2, String ans3, String ans4)
+	public static boolean addTest(String teacherID, String kolokwiumID, String group, String question, String ans1, String ans2, String ans3, String ans4, String correct)
 	{
+		System.out.println("DODAJE TEST");
 		boolean success = true;
 		Statement s = createStatement(connection);
 		try
 		{
+			// DODAJ TEST JESLI GO NIE MA
 			executeUpdate(s, "INSERT IGNORE INTO `elf_test`(`ID_Test`, `ID_Teacher`, `Group`) VALUES ('"+kolokwiumID+"','"+teacherID+"','"+group+"')");
+		
+			// DODAJ PYTANIE
+			executeUpdate(s, "INSERT INTO `elf_questions`(`ID_Test`, `Content`) "
+					+ "VALUES ('"+kolokwiumID+"','"+question+"')");
 			
-			int questionNum=1;
-			Statement s2 = createStatement(connection);
-			ResultSet r = executeQuery(s2, "SELECT count(*)+1 from elf_questions where ID_Test='"+kolokwiumID+"'");
+			int[] ans = new int[4];
+			ans[Integer.parseInt(correct)-1]=1;
 			
-			try {
-				if(r.next())
-				{
-					questionNum = (int)r.getObject(1)+1;
-				}
-			}
-			catch (SQLException e) {
-				System.out.println("Nie ma takiego konta albo zle wprowadzono dane! " + e.getMessage() + ": " + e.getErrorCode());
-			}
+			// DODAJ ODPOWIEDZI DO PYTANIA
+			executeUpdate(s, "INSERT INTO `elf_answers`(`ID_Question`, `Content`, `IsCorrect`) "
+					+ "VALUES ((SELECT ID_Question from elf_questions where Content ='"+question+"'),'"+ans1+"','"+ans[0]+"')");
 			
-			executeUpdate(s, "INSERT INTO `elf_questions`(`ID_Question`, `ID_Test`, `Content`) "
-					+ "VALUES ("+ questionNum + ",'"+kolokwiumID+"','"+question+"')");
+			executeUpdate(s, "INSERT INTO `elf_answers`(`ID_Question`, `Content`, `IsCorrect`) "
+					+ "VALUES ((SELECT ID_Question from elf_questions where Content ='"+question+"'),'"+ans2+"','"+ans[1]+"')");
+			
+			executeUpdate(s, "INSERT INTO `elf_answers`(`ID_Question`, `Content`, `IsCorrect`) "
+					+ "VALUES ((SELECT ID_Question from elf_questions where Content ='"+question+"'),'"+ans3+"','"+ans[2]+"')");
+			
+			executeUpdate(s, "INSERT INTO `elf_answers`(`ID_Question`, `Content`, `IsCorrect`) "
+					+ "VALUES ((SELECT ID_Question from elf_questions where Content ='"+question+"'),'"+ans4+"','"+ans[3]+"')");
 		}
 		catch (Exception e)
 		{
@@ -176,6 +181,25 @@ public class DBConnector {
 		
 		return success;
 	}
+	
+	public static boolean addMessge(String receiverID, String senderID, String subject, String content)
+	{
+		boolean success = true;
+		Statement s = createStatement(connection);
+		try
+		{
+			executeUpdate(s, "INSERT INTO `elf_message`(`ID_receiver`, `ID_sender`, `subject`, `content`) "
+					+ "VALUES ('"+receiverID+"','"+senderID+"','"+subject+"','"+content+"')");
+		}
+		catch (Exception e)
+		{
+			success=false;
+		}
+		
+		return success;
+	}
+	
+	
 	
 	public DBConnector()
 	{

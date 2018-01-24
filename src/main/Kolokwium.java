@@ -8,8 +8,9 @@ public class Kolokwium {
 	private String id, group;
 	private String pyt;
 	private String odp1, odp2, odp3, odp4;
+	private String poprawnaOdp;
 	
-	public Kolokwium(String id, String group, String pyt, String odp1, String odp2, String odp3, String odp4){
+	public Kolokwium(String id, String group, String pyt, String odp1, String odp2, String odp3, String odp4, String poprawna){
 		this.id = id;
 		this.group = group;
 		this.setPyt(pyt);
@@ -17,6 +18,7 @@ public class Kolokwium {
 		this.setOdp2(odp2);
 		this.setOdp3(odp3);
 		this.setOdp4(odp4);
+		poprawnaOdp=poprawna;
 	}
 
 

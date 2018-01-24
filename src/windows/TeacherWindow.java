@@ -37,14 +37,16 @@ public class TeacherWindow {
 	private JLabel textTemat;
 	private JTextArea poleNumerAlbumu;
 	private JLabel tekstAlbum;
+	private JLabel tekstOdp;
 	private JLabel tekst_tresc;
 	private JTextArea poleTresc;
-	private JTextArea poleGrupa;
+	private JTextArea poleGrupa, poleGrupaTask;
 	private JButton przyciskWyslij;
 	private JTextArea poleIDKolokwium;
-	private JLabel tekstGrupa;
+	private JLabel tekstGrupa, tekstGrupaTask;
 	private JLabel tekstIDKol;
 	private JTextArea poleTrescPytania;
+	private JTextArea poleOdpowiedz;
 	private JLabel tekstPytanie;
 	private JTextArea odpowiedzNumer1;
 	private JTextArea odpowiedzNumer2;
@@ -80,6 +82,7 @@ public class TeacherWindow {
 	 * Create the application.
 	 */
 	public TeacherWindow() {
+		DBConnector connector = new DBConnector();
 		initialize();
 		this.frame.setVisible(true);
 	}
@@ -170,10 +173,20 @@ public class TeacherWindow {
         
         poleTrescZadania = new JTextArea();
         poleTrescZadania.setFont(new Font("Times New Roman", Font.PLAIN, 12));
-        poleTrescZadania.setBounds(10, 35, 453, 237);
+        poleTrescZadania.setBounds(10, 35, 453, 200);
         poleTrescZadania.setBorder(new LineBorder(new Color(0, 0, 0)));
         poleTrescZadania.setColumns(10);
         kartaDodajZadanie.add(poleTrescZadania);
+        
+        tekstGrupaTask = new JLabel("Grupa:");
+        tekstGrupaTask.setBounds(180, 250, 86, 20);
+        kartaDodajZadanie.add(tekstGrupaTask);
+        
+        poleGrupaTask = new JTextArea();
+        poleGrupaTask.setBounds(230, 250, 50, 20);
+        poleGrupaTask.setBorder(new LineBorder(new Color(0, 0, 0)));
+        poleGrupaTask.setColumns(10);
+        kartaDodajZadanie.add(poleGrupaTask);
  
         tekstTresc = new JLabel("Tresc zadania");
         tekstTresc.setFont(new Font("Times New Roman", Font.PLAIN, 20));
@@ -181,15 +194,17 @@ public class TeacherWindow {
         tekstTresc.setBounds(135, 7, 196, 24);
         kartaDodajZadanie.add(tekstTresc);
         
-        przyciskWyslijZadanie = new JButton("Wyalij zadanie");
+        przyciskWyslijZadanie = new JButton("Wyslij zadanie");
         przyciskWyslijZadanie.setBounds(177, 283, 126, 32);
         kartaDodajZadanie.add(przyciskWyslijZadanie);
         przyciskWyslijZadanie.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-				LoginWindow.getClient().sendTask(poleTrescZadania.getText());
-				tekst_tresc.setText("");
+				//LoginWindow.getClient().sendTask(poleTrescZadania.getText());
+				DBConnector.addTask("1", poleTrescZadania.getText(), poleGrupaTask.getText());
+				poleTrescZadania.setText("");
+				poleGrupaTask.setText("");
 			}
 		});
        
@@ -197,12 +212,16 @@ public class TeacherWindow {
         //---------- komponenty do 2 zakładki
         
         tekstIDKol = new JLabel("ID_Kolokwium:");
-        tekstIDKol.setBounds(10, 7, 86, 14);
+        tekstIDKol.setBounds(10, 7, 100, 14);
         kartaKolos.add(tekstIDKol);
         
         tekstGrupa = new JLabel("Grupa:");
         tekstGrupa.setBounds(110, 7, 86, 14);
         kartaKolos.add(tekstGrupa);
+        
+        tekstOdp = new JLabel("Poprawna odp:");
+        tekstOdp.setBounds(210, 7, 100, 14);
+        kartaKolos.add(tekstOdp);
         
         poleIDKolokwium = new JTextArea();
         poleIDKolokwium.setBounds(10, 23, 86, 20);
@@ -215,6 +234,12 @@ public class TeacherWindow {
         poleGrupa.setBorder(new LineBorder(new Color(0, 0, 0)));
         poleGrupa.setColumns(10);
         kartaKolos.add(poleGrupa);
+        
+        poleOdpowiedz = new JTextArea();
+        poleOdpowiedz.setBounds(210, 23, 86, 20);
+        poleOdpowiedz.setBorder(new LineBorder(new Color(0, 0, 0)));
+        poleOdpowiedz.setColumns(10);
+        kartaKolos.add(poleOdpowiedz);
         
         poleTrescPytania = new JTextArea();
         poleTrescPytania.setBounds(10, 66, 453, 44);
@@ -272,15 +297,17 @@ public class TeacherWindow {
         kartaKolos.add(tekst_odp4);
         
         przyciskNastepne = new JButton("Nast\u0119pne");
-        przyciskNastepne.setBounds(249, 281, 110, 34);
+        przyciskNastepne.setBounds(200, 281, 110, 34);
         kartaKolos.add(przyciskNastepne);
         przyciskNastepne.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
 				Kolokwium newKolokwium = new Kolokwium(poleIDKolokwium.getText(), poleGrupa.getText(), poleTrescPytania.getText(),
-						odpowiedzNumer1.getText(),odpowiedzNumer2.getText(),odpowiedzNumer3.getText(),odpowiedzNumer4.getText());
-				
+						odpowiedzNumer1.getText(),odpowiedzNumer2.getText(),odpowiedzNumer3.getText(),odpowiedzNumer4.getText(), poleOdpowiedz.getText());
+				DBConnector connector = new DBConnector();
+				DBConnector.addTest("1", poleIDKolokwium.getText(), poleGrupa.getText(), poleTrescPytania.getText(), 
+						odpowiedzNumer1.getText(), odpowiedzNumer2.getText(), odpowiedzNumer3.getText(), odpowiedzNumer4.getText(), "2");
 				//LoginWindow.getClient().sendTest(newKolokwium);
 				
 				poleTrescPytania.setText("");
@@ -291,15 +318,7 @@ public class TeacherWindow {
 			}
 		});
         
-        przyciskKoniec = new JButton("Koniec");
-        przyciskKoniec.setBounds(110, 281, 110, 34);
-        kartaKolos.add(przyciskKoniec);
-        przyciskKoniec.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				
-			}
-		});
+       
         
         //------ komponenty do 3 zakładki
         

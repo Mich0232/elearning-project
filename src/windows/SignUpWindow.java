@@ -109,7 +109,7 @@ public class SignUpWindow {
 		passwordField.setBounds(198, 117, 130, 26);
 		frame.getContentPane().add(passwordField);
 		
-		JLabel lblLogin = new JLabel("Login:");
+		JLabel lblLogin = new JLabel("E-mail:");
 		lblLogin.setBounds(89, 84, 61, 16);
 		frame.getContentPane().add(lblLogin);
 		
