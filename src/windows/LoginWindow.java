@@ -93,6 +93,8 @@ public class LoginWindow {
 			{
 				JOptionPane.showMessageDialog(frame, "Wrong login or password.\nTry again!","Wrong input data", JOptionPane.ERROR_MESSAGE);
 			}
+			
+			client.sendUserData(currentUser);
 		}
 	}
 	
