@@ -45,6 +45,7 @@ public class StudentWindow {
 	private JSpinner answerSpinner;
 	private User currentUser;
 	private JLabel answerLabel;
+	private JButton refreshButton;
 	
 	/**
 	 * Launch the application.
@@ -177,6 +178,10 @@ public class StudentWindow {
 		answerSpinner = new JSpinner(model);
 		answerSpinner.setBounds(150, 11, 180, 26);
 		kartaZadania.add(answerSpinner);
+		
+		refreshButton = new JButton("Refresh");
+		refreshButton.setBounds(330, 11, 100, 26);
+		kartaZadania.add(refreshButton);
 		
 		answerLabel = new JLabel("TESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTS");
 		answerLabel.setVerticalAlignment(JLabel.TOP);
