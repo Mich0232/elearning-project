@@ -320,6 +320,50 @@ public class DBConnector {
 		return success;
 	}
 	
+	
+	public static ArrayList<Kolokwium> getTest(int idTest)
+	{
+		ArrayList<Kolokwium> questions = new ArrayList<>();
+		System.out.println("ZGARNIAM PYTANKA");
+		Statement s = createStatement(connection);
+		ResultSet rpyt = executeQuery(s, "SELECT ID_Question, Content from elf_questions where ID_Test="+idTest+";");
+		//
+		
+		String pytanie;
+		String idPytania;
+		String[] odp = new String[5];
+		String[] odpcorrect = new String[5];
+		String correct;
+		
+		
+		
+		try {
+			while(rpyt.next())
+			{
+				idPytania = rpyt.getString(1);
+				pytanie = rpyt.getString(2);
+				ResultSet rodp = executeQuery(s, "SELECT Content, IsCorrect from elf_answers where ID_Question="+idPytania+";");
+				int i = 0;
+				correct = null;
+				while(rodp.next()){
+					i++;
+					odp[i] = rodp.getString(1);
+					odpcorrect[i] = String.valueOf(rodp.getInt(2)); 
+					if(Integer.parseInt(odpcorrect[i]) == 1)
+						correct = String.valueOf(i);
+				}
+				questions.add(new Kolokwium(idPytania, null, pytanie, odp[1], odp[2], odp[3], odp[4], correct));
+				
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		return questions;
+	}
+	
 	public static boolean addMessage(int receiverID, int senderID, String subject, String content)
 	{
 		boolean success = true;

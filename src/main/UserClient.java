@@ -4,10 +4,12 @@ package main;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.*;
+import java.util.ArrayList;
 import java.util.UUID;
 
 import models.Task;
@@ -19,6 +21,8 @@ public class UserClient {
 	private static LoginWindow loginW;
 	Socket socket;
 	User currentUser;
+	ArrayList<Kolokwium> kolos;
+	
 	public UserClient()
 	{
 		int port=8013;
@@ -117,6 +121,61 @@ public class UserClient {
 		}	
 	}
 	
+	public ArrayList<Kolokwium> getTest(String TestId){
+		ArrayList<Kolokwium> test = new ArrayList<>();
+		
+		String control = "getTest";
+		try{
+			PrintWriter out = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));	
+				out.println(control);
+				out.flush();
+				
+			}catch(IOException e) {
+			 // TODO Auto-generated catch block
+				System.err.println(e);
+			}
+		
+		try {
+			Thread.sleep(50);
+		} catch (InterruptedException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		try{
+			PrintWriter testid = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));	
+				testid.println(TestId);
+				testid.flush();
+				
+			}catch(IOException e) {
+			 // TODO Auto-generated catch block
+				System.err.println(e);
+			}
+		
+		try {
+			Thread.sleep(100);
+		} catch (InterruptedException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		try {
+			ObjectInputStream gettest = new ObjectInputStream(socket.getInputStream());
+			test = (ArrayList<Kolokwium>)gettest.readObject();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+//		Kolokwium proba = test.get(1);
+//		System.out.println(proba.pyt);
+		
+		return test;
+	}
+	
+		
 	public void sendUserData(User curuser){
 		this.currentUser = curuser;
 		
