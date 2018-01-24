@@ -20,7 +20,7 @@ public class Task implements Serializable {
 	
 	public String toString()
 	{
-		return String.format("Gr:%s - %s ...", this.group, this.content.substring(0, 8));
+		return String.format("%s ...", this.content.substring(0, 10));
 	}
 	
 	public String getContent()
