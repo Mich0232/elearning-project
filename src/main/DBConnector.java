@@ -273,7 +273,7 @@ public class DBConnector {
 		
 	}
 	
-<<<<<<< HEAD
+
 	public static boolean setTaskGrade(String task_id, String student_id, String grade)
 	{
 		Statement s = createStatement(connection);
@@ -291,12 +291,9 @@ public class DBConnector {
 		return true;
 	}
 	
-	
-	// REturns string with studens grades
-	public static String getGrades(String idStudent)
-=======
+
 	public static ArrayList<String> getGrades(int idStudent)
->>>>>>> e3b97994585c57b1a6778e4584d734537f8e83fc
+
 	{
 		ArrayList<String> grades = new ArrayList<>();
 		Statement s = createStatement(connection);
