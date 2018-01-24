@@ -83,7 +83,6 @@ public class UserClient {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	
 		
 	}
 
@@ -97,8 +96,7 @@ public class UserClient {
 			}catch(IOException e) {
 			 // TODO Auto-generated catch block
 				System.err.println(e);
-			}
-		
+			}	
 	}
 	
 	public void sendUserData(User curuser){
@@ -133,6 +131,36 @@ public class UserClient {
 		}				
 		
 	}
+	
+	public void sendMessage(Message msg){
+		String control = "sendMessage";
+		try{
+			PrintWriter out = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));	
+				out.println(control);
+				out.flush();
+				
+			}catch(IOException e) {
+			 // TODO Auto-generated catch block
+				System.err.println(e);
+			}
+		
+		try {
+			Thread.sleep(50);
+		} catch (InterruptedException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		try {
+			ObjectOutputStream sendmsg;
+			sendmsg = new ObjectOutputStream(socket.getOutputStream());
+			sendmsg.writeObject(msg);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	
 //	public static void main(String args[]) 
 //	{

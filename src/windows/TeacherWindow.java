@@ -28,6 +28,7 @@ import javax.swing.JOptionPane;
 
 import main.DBConnector;
 import main.Kolokwium;
+import main.Message;
 import models.Task;
 import models.User;
 
@@ -107,7 +108,6 @@ public class TeacherWindow {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		
 		
 		
 		
@@ -219,7 +219,6 @@ public class TeacherWindow {
 				Task task = new Task(poleTrescZadania.getText(), currentUser.UID, poleGrupaTask.getText());
 				LoginWindow.getClient().sendTask(task);
 				JOptionPane.showMessageDialog(frame, "Zadanie zostalo wyslane do studentow.","Dodano zadanie", JOptionPane.INFORMATION_MESSAGE);
-
 				poleTrescZadania.setText("");
 				poleGrupaTask.setText("");
 			}
@@ -322,7 +321,6 @@ public class TeacherWindow {
 				
 				Kolokwium newKolokwium = new Kolokwium(poleIDKolokwium.getText(), poleGrupa.getText(), poleTrescPytania.getText(),
 						odpowiedzNumer1.getText(),odpowiedzNumer2.getText(),odpowiedzNumer3.getText(),odpowiedzNumer4.getText(), poleOdpowiedz.getText());
-				DBConnector connector = new DBConnector();
 				DBConnector.addTest("1", poleIDKolokwium.getText(), poleGrupa.getText(), poleTrescPytania.getText(), 
 						odpowiedzNumer1.getText(), odpowiedzNumer2.getText(), odpowiedzNumer3.getText(), odpowiedzNumer4.getText(), "2");
 				//LoginWindow.getClient().sendTest(newKolokwium);
@@ -397,7 +395,20 @@ public class TeacherWindow {
         przyciskWyslij = new JButton("Wy\u015Blij");
         przyciskWyslij.setBounds(178, 288, 112, 27);
         kartaKontakt.add(przyciskWyslij);
-        
-        
+        przyciskWyslij.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				Message newmsg = new Message(Integer.parseInt(poleNumerAlbumu.getText()), currentUser.UID, pole_Temat.getText(), poleTresc.getText());
+				LoginWindow.getClient().sendMessage(newmsg);
+
+				JOptionPane.showMessageDialog(frame, "Wiadomosc wyslana","Sukces", JOptionPane.INFORMATION_MESSAGE);
+				poleNumerAlbumu.setText("");
+				pole_Temat.setText("");
+				poleTresc.setText("");
+			
+			}
+               
+	});
 	}
 }
