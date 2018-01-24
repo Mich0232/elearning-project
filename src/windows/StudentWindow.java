@@ -16,6 +16,8 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 
+import models.User;
+
 public class StudentWindow {
 
 	private JFrame frame;
@@ -37,6 +39,8 @@ public class StudentWindow {
 	private JList listaOcenionych;
 	private JList listaZadan;
 
+	private User currentUser;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -45,7 +49,7 @@ public class StudentWindow {
 			@Override
 			public void run() {
 				try {
-					StudentWindow window = new StudentWindow();
+					StudentWindow window = new StudentWindow(new User("Testowy", "User", "Student", "33i", null));
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -57,7 +61,8 @@ public class StudentWindow {
 	/**
 	 * Create the application.
 	 */
-	public StudentWindow() {
+	public StudentWindow(User logged) {
+		currentUser = logged;
 		initialize();
 		this.frame.setVisible(true);
 	}
@@ -82,7 +87,7 @@ public class StudentWindow {
 		frame.getContentPane().add(infoPanel);
 		infoPanel.setLayout(null);
 		
-		JLabel Uzytkownik = new JLabel("U\u017Cytkownik:");
+		JLabel Uzytkownik = new JLabel(currentUser.toString());
 		Uzytkownik.setBounds(10, 9, 79, 14);
 		infoPanel.add(Uzytkownik);
 		

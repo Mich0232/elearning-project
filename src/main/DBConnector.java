@@ -1,5 +1,6 @@
 package main;
 
+import models.User;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -80,24 +81,69 @@ public class DBConnector {
 		return -1;
 	}
 	
-	public static String checkLogin(String login, String password)
+	// Get User data ; null is password is not correct
+	public static User checkLogin(String login, String password)
 	{
 		System.out.println("Sprawdzam dane do logowania");
 		String accountType="";
+		int user_id = -1;
+		String name = null;
+		String surname = null;
+		String group = null;
+		String subject = null;	
+		
 		Statement s = createStatement(connection);
-		ResultSet r = executeQuery(s, "Select type from elf_users where Login='"+login+"' AND Password='"+password+"';");
+		ResultSet r = executeQuery(s, "Select type, user_id from elf_users where Login='"+login+"' AND Password='"+password+"';");
 		
 		try {
 			if(r.next())
 			{
 				accountType = (String)r.getObject(1);
+				user_id = r.getInt(2);
 			}
 		}
 		catch (SQLException e) {
 			System.out.println("Nie ma takiego konta albo zle wprowadzono dane! " + e.getMessage() + ": " + e.getErrorCode());
+			return null;
 		}
 		
-		return accountType;
+		System.out.println("User id: " + user_id);
+		// Get user data from DB
+		if(accountType.equals("Student"))
+		{
+			String selection = String.format("call getStudentData(%s)", user_id);
+			r = executeQuery(s, selection);
+			try {
+				if(r.next())
+				{
+					name = (String)r.getObject(1);
+					surname = (String)r.getObject(2);
+					group = (String)r.getObject(3);
+					subject = null;
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}else
+		{
+			String selection = String.format("call getTeacherData(%s)", user_id);
+			r = executeQuery(s, selection);
+			try {
+				if(r.next())
+				{
+					name = (String)r.getObject(1);
+					surname = (String)r.getObject(2);
+					group = null;
+					subject = (String)r.getObject(3);
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		User loggedUser = new User(name, surname, accountType, group, subject);		
+		
+		return loggedUser;
 	}
 	
 	public static boolean addUser(String login, String password, String name, String surname, String group, String type)
@@ -144,6 +190,11 @@ public class DBConnector {
 		return success;
 	}
 	
+	public static boolean getTasks()
+	{
+		return false;
+	}
+	
 	public static boolean addTest(String teacherID, String kolokwiumID, String group, String question, String ans1, String ans2, String ans3, String ans4)
 	{
 		boolean success = true;
@@ -162,6 +213,8 @@ public class DBConnector {
 		
 		return success;
 	}
+	
+	
 	
 	public DBConnector()
 	{

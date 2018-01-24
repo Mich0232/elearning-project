@@ -21,6 +21,7 @@ import javax.swing.JOptionPane;
 
 import main.DBConnector;
 import main.Kolokwium;
+import models.User;
 
 public class TeacherWindow {
 
@@ -59,6 +60,8 @@ public class TeacherWindow {
 	private JList list;
 	private JButton przyciskPobierzWszystkie;
 
+	private User currentUser;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -67,7 +70,7 @@ public class TeacherWindow {
 			@Override
 			public void run() {
 				try {
-					TeacherWindow window = new TeacherWindow();
+					TeacherWindow window = new TeacherWindow((new User("Testowy", "User", "Student", null, "Majca")));
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -79,7 +82,8 @@ public class TeacherWindow {
 	/**
 	 * Create the application.
 	 */
-	public TeacherWindow() {
+	public TeacherWindow(User logged) {
+		currentUser = logged;
 		initialize();
 		this.frame.setVisible(true);
 	}
@@ -107,7 +111,7 @@ public class TeacherWindow {
 		frame.getContentPane().add(infoPanel);
 		infoPanel.setLayout(null);
 		
-		JLabel Uzytkownik = new JLabel("U\u017Cytkownik:");
+		JLabel Uzytkownik = new JLabel(currentUser.toString());
 		Uzytkownik.setBounds(10, 9, 79, 14);
 		infoPanel.add(Uzytkownik);
 		
