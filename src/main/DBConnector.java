@@ -343,7 +343,8 @@ public class DBConnector {
 			{
 				idPytania = rpyt.getString(1);
 				pytanie = rpyt.getString(2);
-				ResultSet rodp = executeQuery(s, "SELECT Content, IsCorrect from elf_answers where ID_Question="+idPytania+";");
+				Statement s2 = createStatement(connection);
+				ResultSet rodp = executeQuery(s2, "SELECT Content, IsCorrect from elf_answers where ID_Question="+idPytania+";");
 				int i = 0;
 				correct = null;
 				while(rodp.next()){
