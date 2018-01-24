@@ -20,7 +20,7 @@ public class Task implements Serializable {
 	
 	public String toString()
 	{
-		return String.format("Gr:%s - Created by %s", this.group, this.UID);
+		return String.format("Gr:%s - %s ...", this.group, this.content.substring(0, 8));
 	}
 	
 	public String getContent()

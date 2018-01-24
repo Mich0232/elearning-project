@@ -49,6 +49,7 @@ public class StudentWindow {
 	private User currentUser;
 	private JLabel answerLabel;
 	private JButton refreshButton;
+	private JButton selectButton;
 	
 	private DBConnector db;
 	
@@ -179,7 +180,7 @@ public class StudentWindow {
        //---------- komponenty do 2 zak³adki
         
 //        String[] answers = {"RED","BLUE","GREEN"};
-		SpinnerModel model = new SpinnerListModel(db.getTasks(currentUser.group.toString()));
+        SpinnerListModel model = new SpinnerListModel(db.getTasks(currentUser.group.toString()));
 		
 		answerSpinner = new JSpinner(model);
 		answerSpinner.setBounds(150, 11, 180, 26);
@@ -194,15 +195,27 @@ public class StudentWindow {
 		
 		kartaZadania.add(answerSpinner);
 		
-		refreshButton = new JButton("Select");
-		refreshButton.setBounds(330, 11, 100, 26);
+		refreshButton = new JButton("Refresh");
+		refreshButton.setBounds(50, 11, 100, 26);
 		refreshButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+//				answerLabel.setText(((Task)answerSpinner.getValue()).getContent());
+				model.setList(db.getTasks(currentUser.group.toString()));
+			}
+		});
+		kartaZadania.add(refreshButton);
+		
+		selectButton = new JButton("Select");
+		selectButton.setBounds(330, 11, 100, 26);
+		selectButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				answerLabel.setText(((Task)answerSpinner.getValue()).getContent());
 			}
 		});
-		kartaZadania.add(refreshButton);
+		kartaZadania.add(selectButton);
+		
 		answerLabel = new JLabel(((Task)answerSpinner.getValue()).getContent());
 		answerLabel.setVerticalAlignment(JLabel.TOP);
 		//answerLabel.setMinimumSize()
