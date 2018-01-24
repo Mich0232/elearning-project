@@ -450,11 +450,11 @@ public class TeacherWindow {
 		});
 		kartaPodgladPrac.add(selectButton);
 	
-		answerLabel = new JLabel("...");
+		answerLabel = new JLabel("Wybierz zadanie do oceny");
 		answerLabel.setVerticalAlignment(JLabel.TOP);
 		answerLabel.setHorizontalAlignment(JLabel.LEFT);
 		answerLabel.setMinimumSize(new Dimension(0,0));
-		answerLabel.setBounds(200, 80, 100, 26);
+		answerLabel.setBounds(200, 80, 200, 26);
 		kartaPodgladPrac.add(answerLabel);
         // Ocena zadan
 		
@@ -492,7 +492,11 @@ public class TeacherWindow {
 				String gradeValue = gradeSelect.getValue().toString();
 				String answer_value = contentSpinner.getValue().toString();
 				String selectedValue = answerSpinner.getValue().toString();
-				DBConnector.setTaskGrade(selectedValue, answer_value, gradeValue);
+				if(DBConnector.setTaskGrade(selectedValue, answer_value, gradeValue))
+				{
+					answerLabel.setText("Wyslano ocene");
+				}
+				
 			}
 			
 		});
