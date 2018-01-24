@@ -1,5 +1,6 @@
 package main;
 
+import models.Task;
 import models.User;
 
 import java.sql.Connection;
@@ -174,13 +175,13 @@ public class DBConnector {
 		return success;
 	}
 	
-	public static boolean addTask(String teacherID, String content, String group)
+	public static boolean addTask(Task task)
 	{
 		boolean success = true;
 		Statement s = createStatement(connection);
 		try
 		{
-			executeUpdate(s, "INSERT INTO `elf_task`(`Content`, `ID_Teacher`, `Group`) VALUES ('"+content+"','"+teacherID+"','"+group+"')");
+			executeUpdate(s, "INSERT INTO `elf_task`(`Content`, `ID_Teacher`, `Group`) VALUES ('"+task.content+"','"+task.UID+"','"+task.group+"')");
 		}
 		catch (Exception e)
 		{

@@ -39,7 +39,7 @@ public class Server1TCPThread extends Thread {
 			
 			System.out.println("Utworzono watek na Serwerze nr.1");
 		
-		//*********************TREŒÆ**************************************
+		//*********************TREï¿½ï¿½**************************************
 		
 		control = "work";
 						
@@ -52,7 +52,7 @@ public class Server1TCPThread extends Thread {
 			case "sendTask":
 				ObjectInputStream gettask = new ObjectInputStream(mySocket.getInputStream());						
 				Task task = (Task)gettask.readObject();
-					System.out.println(task.content);			
+				DBConnector.addTask(task);			
 				break;
 			case "AddTest":
 				
