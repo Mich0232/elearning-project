@@ -324,9 +324,8 @@ public class TeacherWindow {
 				
 				Kolokwium newKolokwium = new Kolokwium(poleIDKolokwium.getText(), poleGrupa.getText(), poleTrescPytania.getText(),
 						odpowiedzNumer1.getText(),odpowiedzNumer2.getText(),odpowiedzNumer3.getText(),odpowiedzNumer4.getText(), poleOdpowiedz.getText());
-				DBConnector.addTest("1", poleIDKolokwium.getText(), poleGrupa.getText(), poleTrescPytania.getText(), 
-						odpowiedzNumer1.getText(), odpowiedzNumer2.getText(), odpowiedzNumer3.getText(), odpowiedzNumer4.getText(), "2");
-				//LoginWindow.getClient().sendTest(newKolokwium);
+				
+				LoginWindow.getClient().addTest(newKolokwium);
 
 				JOptionPane.showMessageDialog(frame, "Pytanie do kolokwium zostalo zapisanie w bazie","Dodano pytanie", JOptionPane.INFORMATION_MESSAGE);
 				poleTrescPytania.setText("");

@@ -6,6 +6,8 @@ import java.awt.Font;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -180,8 +182,14 @@ public class StudentWindow {
        //---------- komponenty do 2 zak³adki
         
 //        String[] answers = {"RED","BLUE","GREEN"};
-        SpinnerListModel model = new SpinnerListModel(db.getTasks(currentUser.group.toString()));
-		
+        List<Task> taskList = db.getTasks(currentUser.group.toString());
+        if (taskList == null || taskList.isEmpty()) {
+        	taskList = new ArrayList<Task>();
+        	taskList.add(new Task("Brak zadan", 999, "00"));
+        }
+              
+        SpinnerListModel model = new SpinnerListModel(taskList);
+	
 		answerSpinner = new JSpinner(model);
 		answerSpinner.setBounds(150, 11, 180, 26);
 //		answerSpinner.addChangeListener(new ChangeListener() {

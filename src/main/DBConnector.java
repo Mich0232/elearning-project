@@ -267,6 +267,8 @@ public class DBConnector {
 			ans[Integer.parseInt(correct)-1]=1;
 			
 			// DODAJ ODPOWIEDZI DO PYTANIA
+			
+			
 			executeUpdate(s, "INSERT INTO `elf_answers`(`ID_Question`, `Content`, `IsCorrect`) "
 					+ "VALUES ((SELECT ID_Question from elf_questions where Content ='"+question+"'),'"+ans1+"','"+ans[0]+"')");
 			
