@@ -26,6 +26,7 @@ import javax.swing.JOptionPane;
 
 import main.DBConnector;
 import main.Kolokwium;
+import models.Task;
 import models.User;
 
 public class TeacherWindow {
@@ -211,9 +212,8 @@ public class TeacherWindow {
         przyciskWyslijZadanie.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
-				LoginWindow.getClient().sendTask(poleTrescZadania.getText());
-				//DBConnector.addTask("1", poleTrescZadania.getText(), poleGrupaTask.getText());
+				Task task = new Task(poleTrescZadania.getText(), currentUser.UID, poleGrupaTask.getText());
+				LoginWindow.getClient().sendTask(task);
 				JOptionPane.showMessageDialog(frame, "Zadanie zostalo wyslane do studentow.","Dodano zadanie", JOptionPane.INFORMATION_MESSAGE);
 
 				poleTrescZadania.setText("");
