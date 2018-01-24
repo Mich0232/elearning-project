@@ -26,6 +26,7 @@ import javax.swing.JOptionPane;
 
 import main.DBConnector;
 import main.Kolokwium;
+import models.Task;
 import models.User;
 
 public class TeacherWindow {
@@ -211,9 +212,8 @@ public class TeacherWindow {
         przyciskWyslijZadanie.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
-				LoginWindow.getClient().sendTask(poleTrescZadania.getText());
-				//DBConnector.addTask("1", poleTrescZadania.getText(), poleGrupaTask.getText());
+				Task task = new Task(poleTrescZadania.getText(), currentUser.UID, poleGrupaTask.getText());
+				LoginWindow.getClient().sendTask(task);
 				JOptionPane.showMessageDialog(frame, "Zadanie zostalo wyslane do studentow.","Dodano zadanie", JOptionPane.INFORMATION_MESSAGE);
 
 				poleTrescZadania.setText("");
@@ -322,7 +322,8 @@ public class TeacherWindow {
 				DBConnector.addTest("1", poleIDKolokwium.getText(), poleGrupa.getText(), poleTrescPytania.getText(), 
 						odpowiedzNumer1.getText(), odpowiedzNumer2.getText(), odpowiedzNumer3.getText(), odpowiedzNumer4.getText(), "2");
 				//LoginWindow.getClient().sendTest(newKolokwium);
-				
+
+				JOptionPane.showMessageDialog(frame, "Pytanie do kolokwium zostalo zapisanie w bazie","Dodano pytanie", JOptionPane.INFORMATION_MESSAGE);
 				poleTrescPytania.setText("");
 				odpowiedzNumer1.setText("");
 				odpowiedzNumer2.setText("");
