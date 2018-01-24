@@ -248,23 +248,35 @@ public class DBConnector {
 		return taskList;
 	}
 	
-	public static String getGrades(String idStudent)
+	public static ArrayList<String> getGrades(int idStudent)
 	{
-		String grades="";
-		
+		ArrayList<String> grades = new ArrayList<>();
+		System.out.println("ZGARNIAM OCENY");
 		Statement s = createStatement(connection);
-		ResultSet r = executeQuery(s, "SELECT");
+		ResultSet r = executeQuery(s, "SELECT ID_Test, Grade from elf_test_ans where ID_Student='"+idStudent+"';");
 		
 		try {
 			while(r.next())
 			{
-				//grades += ((String)r.getObject(1)+" ";
+				grades.add("Test#"+r.getObject(1).toString()+" "+(String)r.getObject(2).toString());
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
+		s = createStatement(connection);
+		r = executeQuery(s, "SELECT ID_Task, Grade from elf_task_ans where ID_Student='"+idStudent+"';");
+		
+		try {
+			while(r.next())
+			{
+				grades.add("Zadanie#"+r.getObject(1)+" "+r.getObject(2).toString()+"\n");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return grades;
 	}
 

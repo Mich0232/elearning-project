@@ -13,6 +13,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.JTabbedPane;
@@ -24,6 +25,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 
 import main.DBConnector;
+import main.Kolokwium;
 import models.User;
 import models.Task;
 
@@ -54,6 +56,9 @@ public class StudentWindow {
 	private JButton selectButton;
 	
 	private DBConnector db;
+	private JLabel gradesLabel;
+	private JLabel titleLabel;
+	private JButton refreshGrades;
 	
 	/**
 	 * Launch the application.
@@ -234,10 +239,32 @@ public class StudentWindow {
         
         //---------- komponenty do 3 zak³adki
        
-        listaOcenionych = new JList();
-        listaOcenionych.setBounds(10, 11, 453, 293);
-        kartaPodgladOcen.add(listaOcenionych);
        
+       
+        titleLabel = new JLabel("Twoje oceny:");
+        titleLabel.setVerticalAlignment(JLabel.TOP);
+        titleLabel.setBounds(10, 10, 500, 300);
+		kartaPodgladOcen.add(titleLabel);
+		
+		gradesLabel = new JLabel("Brak ocen");
+        gradesLabel.setVerticalAlignment(JLabel.TOP);
+        gradesLabel.setBounds(10, 40, 500, 300);
+		kartaPodgladOcen.add(gradesLabel);
+		
+		refreshGrades = new JButton("Odswiez");
+		refreshGrades.setBounds(350, 10, 90, 20);
+        kartaPodgladOcen.add(refreshGrades);
+        refreshGrades.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ArrayList<String> results = DBConnector.getGrades(currentUser.UID);
+				gradesLabel.setText("<html> ");
+				for(int i=0; i<results.size(); i++)
+					gradesLabel.setText(gradesLabel.getText()+" <br> "+results.get(i));
+				gradesLabel.setText( gradesLabel.getText() + " </html>");
+		}
+        });
+        
         
         //---------- komponenty do 4 zak³adki
         
