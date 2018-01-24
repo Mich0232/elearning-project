@@ -8,7 +8,7 @@ public class User implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	//public int UID;
+	public int UID;
 	public String name;
 	public String surname;
 	public String accountType;
@@ -17,8 +17,8 @@ public class User implements Serializable{
 	
 	
 	
-	public User(String name, String surname, String accountType, String group, String subject) {
-		//this.UID = UID;
+	public User(int UID, String name, String surname, String accountType, String group, String subject) {
+		this.UID = UID;
 		this.name = name;
 		this.surname = surname;
 		this.accountType = accountType;
