@@ -14,6 +14,8 @@ import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
 
 import java.awt.Color;
+import java.awt.Dimension;
+
 import javax.swing.border.LineBorder;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -69,6 +71,8 @@ public class TeacherWindow {
 	private JList list;
 	private JButton przyciskPobierzWszystkie;
 	private JSpinner answerSpinner;
+	private JLabel answerLabel;
+	private JButton refreshButton;
 
 	private User currentUser;
 	
@@ -343,10 +347,17 @@ public class TeacherWindow {
 		answerSpinner = new JSpinner(model);
 		answerSpinner.setBounds(150, 11, 180, 26);
 		kartaPodgladPrac.add(answerSpinner);
+		
+		refreshButton = new JButton("Refresh");
+		refreshButton.setBounds(330, 11, 100, 26);
+		kartaPodgladPrac.add(refreshButton);
+		
+		answerLabel = new JLabel("TESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTS");
+		answerLabel.setVerticalAlignment(JLabel.TOP);
+		answerLabel.setMinimumSize(new Dimension(0,0));
+		answerLabel.setBounds(20, 40, 180, 26);
+		kartaPodgladPrac.add(answerLabel);
         
-        przyciskPobierzWszystkie = new JButton("Pobierz wszystkie");
-        przyciskPobierzWszystkie.setBounds(157, 260, 148, 23);
-        kartaPodgladPrac.add(przyciskPobierzWszystkie);
        
       //------ komponenty do 4 zakładki
         

@@ -2,12 +2,15 @@ package main;
 
 import models.Task;
 import models.User;
+import models.Task;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DBConnector {
 	
@@ -189,6 +192,37 @@ public class DBConnector {
 		}
 		
 		return success;
+	}
+	
+	// Return list of Task's for given group
+	public static List<Task> getTasks(String group_id)
+	{
+		List<Task> taskList = new ArrayList<Task>();
+		
+		Statement s = createStatement(connection);
+		String selection = String.format("call getTasks('%s');", group_id);
+		ResultSet r; 
+		
+		try {
+		r = executeQuery(s, selection);
+		}catch(Exception e)
+		{
+			System.out.println(e.getMessage());
+			return null;
+		}
+		
+		try {
+			while(r.next())
+			{
+				taskList.add(new Task((String)r.getObject(1), r.getInt(2), (String)r.getObject(3)));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		return taskList;
 	}
 	
 
