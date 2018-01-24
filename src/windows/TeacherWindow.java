@@ -68,6 +68,7 @@ public class TeacherWindow {
 	private JList list;
 	private JButton przyciskPobierzWszystkie;
 	private JSpinner answerSpinner;
+	private JLabel answerLabel;
 
 	private User currentUser;
 	
@@ -345,10 +346,13 @@ public class TeacherWindow {
 		answerSpinner = new JSpinner(model);
 		answerSpinner.setBounds(150, 11, 180, 26);
 		kartaPodgladPrac.add(answerSpinner);
+		
+		answerLabel = new JLabel("TESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTS");
+		answerLabel.setVerticalAlignment(JLabel.TOP);
+		//answerLabel.setMinimumSize()
+		answerLabel.setBounds(10, 40, 500, 300);
+		kartaPodgladPrac.add(answerLabel);
         
-        przyciskPobierzWszystkie = new JButton("Pobierz wszystkie");
-        przyciskPobierzWszystkie.setBounds(157, 260, 148, 23);
-        kartaPodgladPrac.add(przyciskPobierzWszystkie);
        
       //------ komponenty do 4 zakładki
         

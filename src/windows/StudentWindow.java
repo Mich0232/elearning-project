@@ -10,9 +10,12 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JSpinner;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.SpinnerListModel;
+import javax.swing.SpinnerModel;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 
@@ -38,8 +41,9 @@ public class StudentWindow {
 	private JButton przyciskWyslij;
 	private JList listaOcenionych;
 	private JList listaZadan;
-
+	private JSpinner answerSpinner;
 	private User currentUser;
+	private JLabel answerLabel;
 	
 	/**
 	 * Launch the application.
@@ -166,9 +170,17 @@ public class StudentWindow {
         
        //---------- komponenty do 2 zak³adki
         
-        listaZadan = new JList();
-        listaZadan.setBounds(10, 11, 453, 304);
-        kartaZadania.add(listaZadan);
+        String[] answers = {"RED","BLUE","GREEN"};
+		SpinnerModel model = new SpinnerListModel(answers);
+		answerSpinner = new JSpinner(model);
+		answerSpinner.setBounds(150, 11, 180, 26);
+		kartaZadania.add(answerSpinner);
+		
+		answerLabel = new JLabel("TESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTS");
+		answerLabel.setVerticalAlignment(JLabel.TOP);
+		//answerLabel.setMinimumSize()
+		answerLabel.setBounds(10, 40, 500, 300);
+		kartaZadania.add(answerLabel);
         
         //---------- komponenty do 3 zak³adki
        
