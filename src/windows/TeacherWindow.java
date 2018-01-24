@@ -78,7 +78,7 @@ public class TeacherWindow {
 			@Override
 			public void run() {
 				try {
-					TeacherWindow window = new TeacherWindow((new User("Testowy", "User", "Student", null, "Majca")));
+					TeacherWindow window = new TeacherWindow((new User(0,"Testowy", "User", "Student", null, "Majca")));
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -214,9 +214,10 @@ public class TeacherWindow {
 				
 				LoginWindow.getClient().sendTask(poleTrescZadania.getText());
 				//DBConnector.addTask("1", poleTrescZadania.getText(), poleGrupaTask.getText());
+				JOptionPane.showMessageDialog(frame, "Zadanie zostalo wyslane do studentow.","Dodano zadanie", JOptionPane.INFORMATION_MESSAGE);
+
 				poleTrescZadania.setText("");
 				poleGrupaTask.setText("");
-
 			}
 		});
        

@@ -49,7 +49,7 @@ public class StudentWindow {
 			@Override
 			public void run() {
 				try {
-					StudentWindow window = new StudentWindow(new User("Testowy", "User", "Student", "33i", null));
+					StudentWindow window = new StudentWindow(new User(0, "Testowy", "User", "Student", "33i", null));
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();

@@ -141,7 +141,7 @@ public class DBConnector {
 			}
 		}
 		
-		User loggedUser = new User(name, surname, accountType, group, subject);		
+		User loggedUser = new User(user_id, name, surname, accountType, group, subject);		
 		
 		return loggedUser;
 	}
