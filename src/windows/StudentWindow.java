@@ -16,6 +16,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 
+import main.DBConnector;
 import models.User;
 
 public class StudentWindow {
@@ -63,6 +64,7 @@ public class StudentWindow {
 	 */
 	public StudentWindow(User logged) {
 		currentUser = logged;
+		DBConnector connector = new DBConnector();
 		initialize();
 		this.frame.setVisible(true);
 	}
