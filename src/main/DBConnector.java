@@ -2,7 +2,7 @@ package main;
 
 import models.Task;
 import models.User;
-import models.Task;
+import models.TaskAnswer;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -225,30 +225,75 @@ public class DBConnector {
 		return taskList;
 	}
 	
-	public static List<Task> getTeacherTasks(String idTeacher)
+	// returns list of teachers tasks
+	public static List<String> getTeacherTasks(String idTeacher)
 	{
-		List<Task> taskList = new ArrayList<Task>();
+		List<String> teacherTaskIDs = new ArrayList<String>();
 		
 		Statement s = createStatement(connection);
-		ResultSet r = executeQuery(s, "Select elf_task.ID_Task, elf_task_ans.Content, elf_task.Group "
-				+ "from elf_task_ans JOIN elf_task ON elf_task.ID_Task=elf_task_ans.ID_Task where elf_task.ID_Teacher='"+idTeacher+"';");
+		String selection = String.format("call getTeacherTasks('%s');", idTeacher);
+		ResultSet r;
 		
 		try {
+			r = executeQuery(s, selection);
 			while(r.next())
 			{
-				taskList.add(new Task((String)r.getObject(2), Integer.parseInt(idTeacher), (String)r.getObject(3)));
+				teacherTaskIDs.add(String.valueOf(r.getInt(1)));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+
+		return teacherTaskIDs;
+	}
+	
+	// returns list of answers for giver task
+	public static List<TaskAnswer> getTaskAnswers(String task_id)
+	{
+		List<TaskAnswer> taskList = new ArrayList<TaskAnswer>();
+		Statement s = createStatement(connection);
+		String selection = String.format("call getTaskAnswers('%s');", task_id);
+		ResultSet r;	
+		
+		try {
+			r = executeQuery(s, selection);
+			while(r.next())
+			{
+				if(((String)r.getObject(4)).length() == 0)
+					taskList.add(new TaskAnswer((String)r.getObject(3), r.getInt(1), Integer.parseInt(task_id)));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return null;
 		}
 		
-		for(int i=0; i<taskList.size(); i++)
-			System.out.println(i+") "+taskList.get(i));
 		return taskList;
+		
 	}
 	
+
+	public static boolean setTaskGrade(String task_id, String student_id, String grade)
+	{
+		Statement s = createStatement(connection);
+		String selection = String.format("call setTaskGrade(%s,%s,'%s');", task_id, student_id, grade);
+
+		
+		try {
+			executeUpdate(s, selection);
+
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
+	
+
 	public static ArrayList<String> getGrades(int idStudent)
+
 	{
 		ArrayList<String> grades = new ArrayList<>();
 		Statement s = createStatement(connection);

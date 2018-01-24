@@ -19,11 +19,12 @@ import java.awt.Dimension;
 import javax.swing.border.LineBorder;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
 import java.awt.SystemColor;
 import java.awt.Font;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JList;
@@ -34,6 +35,7 @@ import main.Kolokwium;
 import main.Message;
 import models.Task;
 import models.User;
+import models.TaskAnswer;
 
 public class TeacherWindow {
 
@@ -74,10 +76,19 @@ public class TeacherWindow {
 	private JList list;
 	private JButton przyciskPobierzWszystkie;
 	private JSpinner answerSpinner;
+	private JSpinner contentSpinner;
 	private JLabel answerLabel;
-	private JButton refreshButton;
+	private JLabel select1Label;
+	private JLabel select2Label;
+	private JButton selectAnsButton;
+	private JButton selectButton;
+	
+	private JLabel gradeLabel;
+	private JSpinner gradeSelect;
+	private JButton sendGrade;
 
 	private User currentUser;
+	private DBConnector db;
 	
 	/**
 	 * Launch the application.
@@ -102,7 +113,7 @@ public class TeacherWindow {
 
 	public TeacherWindow(User logged) {
 		currentUser = logged;
-		DBConnector connector = new DBConnector();
+		db = new DBConnector();
 		initialize();
 		this.frame.setVisible(true);
 	}
@@ -352,38 +363,155 @@ public class TeacherWindow {
         list.setBounds(10, 11, 453, 262);
         kartaPodgladPrac.add(list);*/
 
-		List<Task> answers = new ArrayList<Task>();
-		//SpinnerModel model = new SpinnerListModel(answers);
-		answerSpinner = new JSpinner();
-		answerSpinner.setBounds(150, 11, 180, 26);
+        List<String> task_id = db.getTeacherTasks(String.valueOf(currentUser.UID));
+        List<TaskAnswer> answers = new ArrayList<TaskAnswer>();
+        if(task_id == null) {
+        	task_id = new ArrayList<String>();
+        	task_id.add(new String("Brak"));
+        }
+//        else
+//        {
+//        	answers = db.getTaskAnswers(task_id.get(0));
+//        }
+        	
+		SpinnerListModel model = new SpinnerListModel(task_id);
+		answerSpinner = new JSpinner(model);
+		answerSpinner.setBounds(200, 11, 180, 26); // top row - right
+		
+		SpinnerListModel contentModel = new SpinnerListModel();
+		contentSpinner = new JSpinner(contentModel);
+		contentSpinner.setBounds(200, 40, 180, 26); // bottom row- right
+		kartaPodgladPrac.add(contentSpinner);
+		
 		kartaPodgladPrac.add(answerSpinner);
 		
-		refreshButton = new JButton("Refresh");
-		refreshButton.setBounds(330, 11, 100, 26);
-		kartaPodgladPrac.add(refreshButton);
-		refreshButton.addActionListener(new ActionListener() {
+		
+		select2Label = new JLabel("Nr. Ucznia:");
+		select2Label.setVerticalAlignment(JLabel.TOP);
+		select2Label.setHorizontalAlignment(JLabel.LEFT);
+		select2Label.setMinimumSize(new Dimension(0,0));
+		select2Label.setBounds(0, 40, 100, 26);
+		kartaPodgladPrac.add(select2Label);
+		
+		selectAnsButton = new JButton("Select");
+		selectAnsButton.setBounds(100, 40, 100, 26);		// bottom row - left
+		selectAnsButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				List<Task> answers = DBConnector.getTeacherTasks("1");
-				List<String> answerLabels = new ArrayList<>();
-				for(int i=0; i<answers.size(); i++)
-					answerLabels.add(answers.get(i).toString());
+
+				String answer_value = contentSpinner.getValue().toString();
+				String selectedValue = answerSpinner.getValue().toString();
+				List<TaskAnswer> temp_copy = new ArrayList<TaskAnswer>();
+				if(!selectedValue.equals("empty"))
+				{									
+					for(TaskAnswer ts : DBConnector.getTaskAnswers(selectedValue))
+					{
+						temp_copy.add(ts);	
+					}
+				}
+				if(!temp_copy.isEmpty()) {
+					for(TaskAnswer ans : temp_copy) {
+						if(ans.sender_id == Integer.parseInt(answer_value))
+						{
+							answerLabel.setText(ans.getContent());
+						}
+					}
+				}
 				
-				if(answerLabels.size()==0)
-					answerLabels.add("EMPTY");
-				System.out.println(answerLabels.size());
-				SpinnerModel model = new SpinnerListModel(answerLabels);
-				answerSpinner.setVisible(false);
-				answerSpinner = new JSpinner(model);
-				answerSpinner.setBounds(150, 11, 180, 26);
+				
+				
 			}
 		});
-		answerLabel = new JLabel("TESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTS");
+		kartaPodgladPrac.add(selectAnsButton);
+		
+		
+		select1Label = new JLabel("Nr.Zadania:");
+		select1Label.setVerticalAlignment(JLabel.TOP);
+		select1Label.setHorizontalAlignment(JLabel.LEFT);
+		select1Label.setMinimumSize(new Dimension(0,0));
+		select1Label.setBounds(0, 11, 100, 26);
+		kartaPodgladPrac.add(select1Label);
+		
+		selectButton = new JButton("Select");
+		selectButton.setBounds(100, 11, 100, 26); // top row - right
+		
+		selectButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String selectedValue = answerSpinner.getValue().toString();
+				List<TaskAnswer> temp_copy = new ArrayList<TaskAnswer>();
+				if(!selectedValue.equals("Brak"))
+				{									
+					for(TaskAnswer ts : DBConnector.getTaskAnswers(selectedValue))
+					{
+						temp_copy.add(ts);						
+					}
+
+				}
+				if(!temp_copy.isEmpty())
+				{
+					contentModel.setList(temp_copy);
+//					answerLabel.setText(temp_copy.get(0).getContent());
+				}
+					
+			}
+		});
+		kartaPodgladPrac.add(selectButton);
+	
+		answerLabel = new JLabel("Wybierz zadanie do oceny");
 		answerLabel.setVerticalAlignment(JLabel.TOP);
+		answerLabel.setHorizontalAlignment(JLabel.LEFT);
 		answerLabel.setMinimumSize(new Dimension(0,0));
-		answerLabel.setBounds(20, 40, 180, 26);
+		answerLabel.setBounds(200, 80, 200, 26);
 		kartaPodgladPrac.add(answerLabel);
-        
+        // Ocena zadan
+		
+		
+//		private JLabel gradeLabel;
+//		private JSpinner gradeSelect;
+//		private JButton sendGrade;
+		
+		// Label
+		gradeLabel = new JLabel("Ocena:");
+		gradeLabel.setVerticalAlignment(JLabel.TOP);
+		gradeLabel.setHorizontalAlignment(JLabel.LEFT);
+		gradeLabel.setMinimumSize(new Dimension(0,0));
+		gradeLabel.setBounds(100, 250, 50, 26);
+		kartaPodgladPrac.add(gradeLabel);
+		
+		
+		// Spiner
+		String[] grades = {"2.0", "2.5", "3.0", "3.5", "4.0", "4.5", "5.0"};
+		
+		SpinnerModel gradeModel = new SpinnerListModel(grades);
+		gradeSelect = new JSpinner(gradeModel);
+		gradeSelect.setBounds(150, 250, 180, 26); // bottom row- right
+		kartaPodgladPrac.add(gradeSelect);
+		
+		
+		// Button
+		sendGrade = new JButton("Send grade");
+		sendGrade.setBounds(330, 250, 100, 26); // top row - right
+		
+		sendGrade.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String gradeValue = gradeSelect.getValue().toString();
+				String answer_value = contentSpinner.getValue().toString();
+				String selectedValue = answerSpinner.getValue().toString();
+				if(DBConnector.setTaskGrade(selectedValue, answer_value, gradeValue))
+				{
+					answerLabel.setText("Wyslano ocene");
+				}
+				
+			}
+			
+		});
+		
+		kartaPodgladPrac.add(sendGrade);
+		
+		
        
       //------ komponenty do 4 zakładki
         
