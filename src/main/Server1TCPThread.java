@@ -54,8 +54,10 @@ public class Server1TCPThread extends Thread {
 				Task task = (Task)gettask.readObject();
 				DBConnector.addTask(task);			
 				break;
-			case "AddTest":
-				
+			case "addTest":
+				ObjectInputStream gettest = new ObjectInputStream(mySocket.getInputStream());						
+				Kolokwium test = (Kolokwium)gettest.readObject();
+				DBConnector.addTest(String.valueOf(currentUser.UID), test.id, test.group, test.pyt, test.odp1, test.odp2, test.odp3, test.odp4, test.poprawnaOdp);		
 				break;
 			case "sendUserData":
 				try {
