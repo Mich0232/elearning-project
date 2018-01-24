@@ -1,8 +1,14 @@
 package main;
 
-public class Message {
+import java.io.Serializable;
+
+public class Message implements Serializable {
 	
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3130248087232374200L;
 	int idReceiver;
 	int idSender;
 	String subject;

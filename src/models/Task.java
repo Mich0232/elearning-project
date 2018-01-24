@@ -18,4 +18,14 @@ public class Task implements Serializable {
 		this.group = group;
 	}
 	
+	public String toString()
+	{
+		return String.format("Gr:%s - Created by %s", this.group, this.UID);
+	}
+	
+	public String getContent()
+	{
+		return this.content;
+	}
+	
 }
