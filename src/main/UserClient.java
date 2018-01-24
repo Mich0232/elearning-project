@@ -89,14 +89,32 @@ public class UserClient {
 	
 	public void addTest(Kolokwium test){
 		
+		String control = "addTest";
 		try{
 			PrintWriter out = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));	
-				out.println(test);
+				out.println(control);
 				out.flush();
+				
 			}catch(IOException e) {
 			 // TODO Auto-generated catch block
 				System.err.println(e);
-			}	
+			}
+		
+		try {
+			Thread.sleep(50);
+		} catch (InterruptedException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		try {
+			ObjectOutputStream sendtest;
+			sendtest = new ObjectOutputStream(socket.getOutputStream());
+			sendtest.writeObject(test);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
 	}
 	
 	public void sendUserData(User curuser){

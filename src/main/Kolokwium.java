@@ -1,66 +1,29 @@
 package main;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-public class Kolokwium {
+public class Kolokwium implements Serializable{
 
-	private String id, group;
-	private String pyt;
-	private String odp1, odp2, odp3, odp4;
-	private String poprawnaOdp;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1528831372011562356L;
+	public String id, group;
+	public String pyt;
+	public String odp1, odp2, odp3, odp4;
+	public String poprawnaOdp;
 	
 	public Kolokwium(String id, String group, String pyt, String odp1, String odp2, String odp3, String odp4, String poprawna){
 		this.id = id;
 		this.group = group;
-		this.setPyt(pyt);
-		this.setOdp1(odp1);
-		this.setOdp2(odp2);
-		this.setOdp3(odp3);
-		this.setOdp4(odp4);
+		this.pyt = pyt;
+		this.odp1=odp1;
+		this.odp2 = odp2;
+		this.odp3 = odp3;
+		this.odp4 = odp4;
 		poprawnaOdp=poprawna;
 	}
 
-
-	public String getPyt() {
-		return pyt;
-	}
-
-	public void setPyt(String pyt) {
-		this.pyt = pyt;
-	}
-
-	public String getOdp1() {
-		return odp1;
-	}
-
-	public void setOdp1(String odp1) {
-		this.odp1 = odp1;
-	}
-	
-	public String getOdp2() {
-		return odp2;
-	}
-
-	public void setOdp2(String odp2) {
-		this.odp2 = odp2;
-	}
-
-	public String getOdp3() {
-		return odp3;
-	}
-
-	public void setOdp3(String odp3) {
-		this.odp3 = odp3;
-	}
-
-
-	public String getOdp4() {
-		return odp4;
-	}
-
-	public void setOdp4(String odp4) {
-		this.odp4 = odp4;
-	}
-	
 }
