@@ -247,6 +247,26 @@ public class DBConnector {
 			System.out.println(i+") "+taskList.get(i));
 		return taskList;
 	}
+	
+	public static String getGrades(String idStudent)
+	{
+		String grades="";
+		
+		Statement s = createStatement(connection);
+		ResultSet r = executeQuery(s, "SELECT");
+		
+		try {
+			while(r.next())
+			{
+				//grades += ((String)r.getObject(1)+" ";
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return grades;
+	}
 
 	public static boolean addTest(String teacherID, String kolokwiumID, String group, String question, String ans1, String ans2, String ans3, String ans4, String correct)
 
