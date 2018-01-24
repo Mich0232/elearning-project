@@ -10,6 +10,7 @@ import java.io.PrintWriter;
 import java.net.*;
 import java.util.UUID;
 
+import models.Task;
 import models.User;
 import windows.LoginWindow;
 
@@ -55,7 +56,7 @@ public class UserClient {
 			}
 	}
 		
-	public void sendTask(String task){
+	public void sendTask(Task task){
 		String control = "sendTask";
 		try{
 			PrintWriter out = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));	
@@ -74,16 +75,14 @@ public class UserClient {
 			e1.printStackTrace();
 		}
 		
-		try {	
-			PrintWriter sendTask;
-			sendTask = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
-			sendTask.println(task);
-			sendTask.flush();
+		try {
+			ObjectOutputStream sendtask;
+			sendtask = new ObjectOutputStream(socket.getOutputStream());
+			sendtask.writeObject(task);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}	
-		
+		}
 	
 		
 	}

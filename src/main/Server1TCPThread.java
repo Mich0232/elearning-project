@@ -9,6 +9,7 @@ import java.io.PrintWriter;
 import java.net.*;
 import java.util.Scanner;
 
+import models.Task;
 import models.User;
 import windows.LoginWindow;
 
@@ -49,9 +50,9 @@ public class Server1TCPThread extends Thread {
 			
 			switch(control){
 			case "sendTask":
-					BufferedReader getTask = new BufferedReader(new InputStreamReader(mySocket.getInputStream()));						
-					String task = getTask.readLine();
-					System.out.println(task);			
+				ObjectInputStream gettask = new ObjectInputStream(mySocket.getInputStream());						
+				Task task = (Task)gettask.readObject();
+					System.out.println(task.content);			
 				break;
 			case "AddTest":
 				
