@@ -168,10 +168,7 @@ public class UserClient {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-		Kolokwium proba = test.get(1);
-		System.out.println(proba.pyt);
-		
+		}	
 		return test;
 	}
 	
