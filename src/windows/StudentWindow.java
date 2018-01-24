@@ -26,6 +26,7 @@ import javax.swing.border.LineBorder;
 
 import main.DBConnector;
 import main.Kolokwium;
+import main.Message;
 import models.User;
 import models.Task;
 
@@ -66,6 +67,7 @@ public class StudentWindow {
 	private JTextArea poleOdpNaPytanie;
 	private JButton przyciskWyslijOdp;
 	private JLabel tekstOdpowiedz;
+	private ArrayList<Kolokwium> pytania = new ArrayList<>();
 	
 	/**
 	 * Launch the application.
@@ -131,6 +133,14 @@ public class StudentWindow {
 		przyciskWylogowania.setForeground(SystemColor.desktop);
 		przyciskWylogowania.setBounds(358, 7, 109, 19);
 		infoPanel.add(przyciskWylogowania);
+		przyciskWylogowania.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				System.exit(0);
+			
+			}
+        });
 		
 		
 		
@@ -176,7 +186,8 @@ public class StudentWindow {
         poleIdTestu.setBorder(new LineBorder(new Color(0, 0, 0)));
         poleIdTestu.setColumns(10);
         kartaWyslijZadanie.add(poleIdTestu);
-
+        
+        
         
         tekstWyslij = new JLabel("Pobierz pytanie z testu nr.:");
         tekstWyslij.setFont(new Font("Times New Roman", Font.PLAIN, 20));
@@ -184,16 +195,30 @@ public class StudentWindow {
         tekstWyslij.setBounds(102, 11, 288, 24);
         kartaWyslijZadanie.add(tekstWyslij);
         
-        przyciskPrzegladaj = new JButton("Pobierz");
-        przyciskPrzegladaj.setBounds(220, 50, 110, 35);
-        kartaWyslijZadanie.add(przyciskPrzegladaj);
-        
         tekstTestPytanie = new JLabel("Brak pobranego pytania");
         tekstTestPytanie.setVerticalAlignment(SwingConstants.TOP);
         tekstTestPytanie.setHorizontalAlignment(SwingConstants.CENTER);
         poleIdTestu.setBorder(new LineBorder(new Color(0, 0, 0)));
         tekstTestPytanie.setBounds(10, 90, 400, 250);
         kartaWyslijZadanie.add(tekstTestPytanie);
+        
+        
+        przyciskPrzegladaj = new JButton("Pobierz");
+        przyciskPrzegladaj.setBounds(220, 50, 110, 35);
+        kartaWyslijZadanie.add(przyciskPrzegladaj);
+        przyciskPrzegladaj.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				pytania = LoginWindow.getClient().getTest(poleIdTestu.getText());
+				
+				tekstTestPytanie.setText("<html>"+pytania.get(0).pyt+"<br/>1)"+
+				pytania.get(0).odp1+"<br/>2)"+pytania.get(0).odp2+"<br/>3)"+pytania.get(0).odp3+"<br/>4)"+
+						pytania.get(0).odp4+"<br/>"+"</html>");
+				
+			}
+		});
+        
+       
         
         tekstOdpowiedz = new JLabel("Odp:");
         tekstOdpowiedz.setBounds(120, 270, 50, 24);
@@ -208,6 +233,13 @@ public class StudentWindow {
         przyciskWyslijOdp = new JButton("Nastepne");
         przyciskWyslijOdp.setBounds(225, 265, 100, 35);
         kartaWyslijZadanie.add(przyciskWyslijOdp);
+        przyciskWyslijOdp.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(frame, "Your answer has been saved!", "Answer saved" , JOptionPane.INFORMATION_MESSAGE);
+				poleOdpNaPytanie.setText("");
+			}
+		});
         
        //---------- komponenty do 2 zak³adki
         
@@ -352,10 +384,22 @@ public class StudentWindow {
         kartaKontakt.add(poleTresc);
        
         
-        przyciskWyslij = new JButton("Wy\u015Blij");
+        przyciskWyslij = new JButton("Wyslij");
         przyciskWyslij.setBounds(178, 288, 112, 27);
         kartaKontakt.add(przyciskWyslij);
-        
-        
+        przyciskWyslij.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				Message newmsg = new Message(Integer.parseInt(poleNumerAlbumu.getText()), currentUser.UID, pole_Temat.getText(), poleTresc.getText());
+				LoginWindow.getClient().sendMessage(newmsg);
+
+				JOptionPane.showMessageDialog(frame, "Wiadomosc wyslana","Sukces", JOptionPane.INFORMATION_MESSAGE);
+				poleNumerAlbumu.setText("");
+				pole_Temat.setText("");
+				poleTresc.setText("");
+			
+			}
+        });
 	}
 }

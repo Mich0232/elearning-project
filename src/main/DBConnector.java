@@ -399,6 +399,23 @@ public class DBConnector {
 		return success;
 	}
 	
+	public static boolean sendTestAns(int idStudent, String question, String ans)
+	{
+		boolean success = true;
+		Statement s = createStatement(connection);
+		try
+		{
+			executeUpdate(s, "INSERT INTO `elf_test_ans`(`ID_Student`, `ID_Test`, `Grade`) "
+					+ "VALUES ('"+idStudent+"',[value-2],[value-3])");
+		}
+		catch (Exception e)
+		{
+			success=false;
+		}
+		
+		return success;
+	}
+	
 	
 	public DBConnector()
 	{

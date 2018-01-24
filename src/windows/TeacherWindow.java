@@ -151,6 +151,14 @@ public class TeacherWindow {
 		przyciskWylogowania.setForeground(SystemColor.desktop);
 		przyciskWylogowania.setBounds(358, 7, 109, 19);
 		infoPanel.add(przyciskWylogowania);
+		przyciskWylogowania.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				System.exit(0);
+			
+			}
+        });
         
 		//------ stworzenie poszczególnych wyglšdów kazdej zakładki
 		
