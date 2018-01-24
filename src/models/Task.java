@@ -20,7 +20,7 @@ public class Task implements Serializable {
 	
 	public String toString()
 	{
-		return String.format("%s ...", this.content.substring(0, 10));
+		return String.format("%s ...", this.content.substring(0, (this.content.length() < 8 ? this.content.length() : 8)));
 	}
 	
 	public String getContent()
