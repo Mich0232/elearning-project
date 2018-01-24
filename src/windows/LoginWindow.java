@@ -95,6 +95,7 @@ public class LoginWindow {
 			}
 			
 			client.sendUserData(currentUser);
+			client.getTest("1");
 		}
 	}
 	
