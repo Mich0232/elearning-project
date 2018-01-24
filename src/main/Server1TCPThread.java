@@ -5,8 +5,10 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.net.*;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import models.Task;
@@ -59,6 +61,22 @@ public class Server1TCPThread extends Thread {
 				Kolokwium test = (Kolokwium)gettest.readObject();
 				DBConnector.addTest(String.valueOf(currentUser.UID), test.id, test.group, test.pyt, test.odp1, test.odp2, test.odp3, test.odp4, test.poprawnaOdp);		
 				break;
+			case "getTest":    //przesyla obiekt typu array list
+				ArrayList<Kolokwium> test2 = new ArrayList<>();
+				BufferedReader gettestid = new BufferedReader(new InputStreamReader(mySocket.getInputStream()));						
+				int testid = Integer.parseInt(gettestid.readLine());
+				
+				test2 = DBConnector.getTest(testid);
+				
+				try {
+					ObjectOutputStream sendtest;
+					sendtest = new ObjectOutputStream(mySocket.getOutputStream());
+					sendtest.writeObject(test2);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}	
+			
 			case "sendUserData":
 				try {
 

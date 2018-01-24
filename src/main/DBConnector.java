@@ -273,6 +273,7 @@ public class DBConnector {
 		
 	}
 	
+<<<<<<< HEAD
 	public static boolean setTaskGrade(String task_id, String student_id, String grade)
 	{
 		Statement s = createStatement(connection);
@@ -293,22 +294,36 @@ public class DBConnector {
 	
 	// REturns string with studens grades
 	public static String getGrades(String idStudent)
+=======
+	public static ArrayList<String> getGrades(int idStudent)
+>>>>>>> e3b97994585c57b1a6778e4584d734537f8e83fc
 	{
-		String grades="";
-		
+		ArrayList<String> grades = new ArrayList<>();
 		Statement s = createStatement(connection);
-		ResultSet r = executeQuery(s, "SELECT");
+		ResultSet r = executeQuery(s, "SELECT ID_Test, Grade from elf_test_ans where ID_Student='"+idStudent+"';");
 		
 		try {
 			while(r.next())
 			{
-				//grades += ((String)r.getObject(1)+" ";
+				grades.add("Test#"+r.getObject(1).toString()+" "+(String)r.getObject(2).toString());
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
+		s = createStatement(connection);
+		r = executeQuery(s, "SELECT ID_Task, Grade from elf_task_ans where ID_Student='"+idStudent+"';");
+		
+		try {
+			while(r.next())
+			{
+				grades.add("Zadanie#"+r.getObject(1)+" "+r.getObject(2).toString()+"\n");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return grades;
 	}
 
@@ -353,6 +368,51 @@ public class DBConnector {
 		return success;
 	}
 	
+	
+	public static ArrayList<Kolokwium> getTest(int idTest)
+	{
+		ArrayList<Kolokwium> questions = new ArrayList<>();
+		System.out.println("ZGARNIAM PYTANKA");
+		Statement s = createStatement(connection);
+		ResultSet rpyt = executeQuery(s, "SELECT ID_Question, Content from elf_questions where ID_Test="+idTest+";");
+		//
+		
+		String pytanie;
+		String idPytania;
+		String[] odp = new String[5];
+		String[] odpcorrect = new String[5];
+		String correct;
+		
+		
+		
+		try {
+			while(rpyt.next())
+			{
+				idPytania = rpyt.getString(1);
+				pytanie = rpyt.getString(2);
+				Statement s2 = createStatement(connection);
+				ResultSet rodp = executeQuery(s2, "SELECT Content, IsCorrect from elf_answers where ID_Question="+idPytania+";");
+				int i = 0;
+				correct = null;
+				while(rodp.next()){
+					i++;
+					odp[i] = rodp.getString(1);
+					odpcorrect[i] = String.valueOf(rodp.getInt(2)); 
+					if(Integer.parseInt(odpcorrect[i]) == 1)
+						correct = String.valueOf(i);
+				}
+				questions.add(new Kolokwium(idPytania, null, pytanie, odp[1], odp[2], odp[3], odp[4], correct));
+				
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		return questions;
+	}
+	
 	public static boolean addMessage(int receiverID, int senderID, String subject, String content)
 	{
 		boolean success = true;
@@ -370,7 +430,22 @@ public class DBConnector {
 		return success;
 	}
 	
-	
+	public static boolean sendTaskAns(int idStudent, String question, String ans)
+	{
+		boolean success = true;
+		Statement s = createStatement(connection);
+		try
+		{
+			executeUpdate(s, "INSERT INTO `elf_task_ans`(`ID_Student`, `ID_Task`, `Content`, `Grade`) "
+					+ "VALUES ('"+idStudent+"', (Select ID_Task from elf_task where Content='"+question+"')  , '"+ans+"','')");
+		}
+		catch (Exception e)
+		{
+			success=false;
+		}
+		
+		return success;
+	}
 	
 	
 	public DBConnector()

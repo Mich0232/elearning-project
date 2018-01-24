@@ -13,6 +13,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.JTabbedPane;
@@ -24,6 +25,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 
 import main.DBConnector;
+import main.Kolokwium;
 import models.User;
 import models.Task;
 
@@ -35,7 +37,7 @@ public class StudentWindow {
 	private JPanel kartaWyslijZadanie,kartaPodgladOcen,kartaZadania,kartaKontakt;
 	private JButton przyciskWylogowania;
 	JTabbedPane tabbedPane = new JTabbedPane();
-	private JTextArea poleSciezka;
+	private JTextArea poleIdTestu;
 	private JLabel tekstWyslij;
 	private JButton przyciskPrzegladaj;
 	private JTextArea pole_Temat;
@@ -54,6 +56,16 @@ public class StudentWindow {
 	private JButton selectButton;
 	
 	private DBConnector db;
+	private JLabel gradesLabel;
+	private JLabel titleLabel;
+	private JButton refreshGrades;
+	private JTextArea poleOdpowiedzi;
+	private JButton wyslijOdpButton;
+	private String currentTask;
+	private JLabel tekstTestPytanie;
+	private JTextArea poleOdpNaPytanie;
+	private JButton przyciskWyslijOdp;
+	private JLabel tekstOdpowiedz;
 	
 	/**
 	 * Launch the application.
@@ -151,37 +163,54 @@ public class StudentWindow {
         frame.getContentPane().add(tabbedPane);
         tabbedPane.setBorder(null);
         tabbedPane.setBackground(SystemColor.control);
-        tabbedPane.addTab("Wyœlij Zadanie", kartaWyslijZadanie);
-        tabbedPane.addTab("SprawdŸ zadania", kartaZadania);
-        tabbedPane.addTab("Podgl¹d Ocen", kartaPodgladOcen);
+        tabbedPane.addTab("Rozwiaz test", kartaWyslijZadanie);
+        tabbedPane.addTab("Sprawdz zadania", kartaZadania);
+        tabbedPane.addTab("Podglad Ocen", kartaPodgladOcen);
         tabbedPane.addTab("Kontakt z prowadzacym", kartaKontakt);
         
         
         //------------ komponenty do 1 zak³adki
         
-        poleSciezka = new JTextArea();
-        poleSciezka.setEditable(false);
-        poleSciezka.setEnabled(false);
-        poleSciezka.setFont(new Font("Times New Roman", Font.PLAIN, 12));
-        poleSciezka.setBounds(10, 147, 453, 24);
-        poleSciezka.setBorder(new LineBorder(new Color(0, 0, 0)));
-        poleSciezka.setColumns(10);
-        kartaWyslijZadanie.add(poleSciezka);
+        poleIdTestu = new JTextArea();
+        poleIdTestu.setBounds(160, 55, 50, 24);
+        poleIdTestu.setBorder(new LineBorder(new Color(0, 0, 0)));
+        poleIdTestu.setColumns(10);
+        kartaWyslijZadanie.add(poleIdTestu);
 
         
-        tekstWyslij = new JLabel("Wy\u015Blij zadanie w formie pliku");
+        tekstWyslij = new JLabel("Pobierz pytanie z testu nr.:");
         tekstWyslij.setFont(new Font("Times New Roman", Font.PLAIN, 20));
         tekstWyslij.setHorizontalAlignment(SwingConstants.CENTER);
         tekstWyslij.setBounds(102, 11, 288, 24);
         kartaWyslijZadanie.add(tekstWyslij);
         
-        przyciskPrzegladaj = new JButton("Przegl\u0105daj");
-        przyciskPrzegladaj.setBounds(174, 182, 126, 32);
+        przyciskPrzegladaj = new JButton("Pobierz");
+        przyciskPrzegladaj.setBounds(220, 50, 110, 35);
         kartaWyslijZadanie.add(przyciskPrzegladaj);
+        
+        tekstTestPytanie = new JLabel("Brak pobranego pytania");
+        tekstTestPytanie.setVerticalAlignment(SwingConstants.TOP);
+        tekstTestPytanie.setHorizontalAlignment(SwingConstants.CENTER);
+        poleIdTestu.setBorder(new LineBorder(new Color(0, 0, 0)));
+        tekstTestPytanie.setBounds(10, 90, 400, 250);
+        kartaWyslijZadanie.add(tekstTestPytanie);
+        
+        tekstOdpowiedz = new JLabel("Odp:");
+        tekstOdpowiedz.setBounds(120, 270, 50, 24);
+        kartaWyslijZadanie.add(tekstOdpowiedz);
+        
+        poleOdpNaPytanie = new JTextArea();
+        poleOdpNaPytanie.setBounds(160, 270, 50, 24);
+        poleOdpNaPytanie.setBorder(new LineBorder(new Color(0, 0, 0)));
+        poleOdpNaPytanie.setColumns(10);
+        kartaWyslijZadanie.add(poleOdpNaPytanie);
+        
+        przyciskWyslijOdp = new JButton("Nastepne");
+        przyciskWyslijOdp.setBounds(225, 265, 100, 35);
+        kartaWyslijZadanie.add(przyciskWyslijOdp);
         
        //---------- komponenty do 2 zak³adki
         
-//        String[] answers = {"RED","BLUE","GREEN"};
         List<Task> taskList = db.getTasks(currentUser.group.toString());
         if (taskList == null || taskList.isEmpty()) {
         	taskList = new ArrayList<Task>();
@@ -191,7 +220,7 @@ public class StudentWindow {
         SpinnerListModel model = new SpinnerListModel(taskList);
 	
 		answerSpinner = new JSpinner(model);
-		answerSpinner.setBounds(150, 11, 180, 26);
+		answerSpinner.setBounds(120, 11, 200, 26);
 //		answerSpinner.addChangeListener(new ChangeListener() {
 //
 //	        @Override
@@ -204,7 +233,7 @@ public class StudentWindow {
 		kartaZadania.add(answerSpinner);
 		
 		refreshButton = new JButton("Refresh");
-		refreshButton.setBounds(50, 11, 100, 26);
+		refreshButton.setBounds(10, 11, 100, 26);
 		refreshButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -221,7 +250,18 @@ public class StudentWindow {
 			public void actionPerformed(ActionEvent e) {
 				List<Task> taskList = db.getTasks(currentUser.group.toString());
 				if(taskList != null && !taskList.isEmpty())
+				{
 					answerLabel.setText(((Task)answerSpinner.getValue()).getContent());
+					currentTask = answerLabel.getText();
+					answerLabel.setVisible(true);
+					poleOdpowiedzi.setVisible(true);
+				}
+				else
+				{
+					answerLabel.setText("Brak zadan");
+					answerLabel.setVisible(false);
+					poleOdpowiedzi.setVisible(false);
+				}
 			}
 		});
 		kartaZadania.add(selectButton);
@@ -231,13 +271,53 @@ public class StudentWindow {
 		//answerLabel.setMinimumSize()
 		answerLabel.setBounds(10, 40, 500, 300);
 		kartaZadania.add(answerLabel);
+		
+		poleOdpowiedzi = new JTextArea();
+		poleOdpowiedzi.setBounds(10, 90, 410, 50);
+		poleOdpowiedzi.setBorder(new LineBorder(new Color(0, 0, 0)));
+		poleOdpowiedzi.setColumns(10);
+		kartaZadania.add(poleOdpowiedzi);
+		
+		wyslijOdpButton = new JButton("Wyslij");
+		wyslijOdpButton.setBounds(170, 160, 100, 26);
+		wyslijOdpButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				DBConnector.sendTaskAns(currentUser.UID, currentTask, poleOdpowiedzi.getText());
+				JOptionPane.showMessageDialog(frame, "Odpowiedz zostala wyslana!","Dodano odpowiedz", JOptionPane.INFORMATION_MESSAGE);
+				poleOdpowiedzi.setText("");
+			}
+		});
+		kartaZadania.add(wyslijOdpButton);
         
         //---------- komponenty do 3 zak³adki
        
-        listaOcenionych = new JList();
-        listaOcenionych.setBounds(10, 11, 453, 293);
-        kartaPodgladOcen.add(listaOcenionych);
        
+       
+        titleLabel = new JLabel("Twoje oceny:");
+        titleLabel.setVerticalAlignment(JLabel.TOP);
+        titleLabel.setBounds(10, 10, 500, 300);
+		kartaPodgladOcen.add(titleLabel);
+		
+		gradesLabel = new JLabel("Brak ocen");
+        gradesLabel.setVerticalAlignment(JLabel.TOP);
+        gradesLabel.setBounds(10, 40, 500, 300);
+		kartaPodgladOcen.add(gradesLabel);
+		
+		refreshGrades = new JButton("Odswiez");
+		refreshGrades.setBounds(350, 10, 90, 20);
+        kartaPodgladOcen.add(refreshGrades);
+        refreshGrades.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ArrayList<String> results = DBConnector.getGrades(currentUser.UID);
+				gradesLabel.setText("<html> ");
+				for(int i=0; i<results.size(); i++)
+					gradesLabel.setText(gradesLabel.getText()+" <br> "+results.get(i));
+				gradesLabel.setText( gradesLabel.getText() + " </html>");
+		}
+        });
+        
         
         //---------- komponenty do 4 zak³adki
         
