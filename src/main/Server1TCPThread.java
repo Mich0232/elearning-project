@@ -72,6 +72,11 @@ public class Server1TCPThread extends Thread {
 						e.printStackTrace();
 					}
 				break;
+			case "sendMessage":
+				ObjectInputStream getmsg = new ObjectInputStream(mySocket.getInputStream());						
+				Message msg = (Message)getmsg.readObject();
+				DBConnector.addMessage(msg.idReceiver, msg.idSender, msg.subject, msg.content);			
+				break;
 				
 			}
 			

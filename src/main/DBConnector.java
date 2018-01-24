@@ -231,7 +231,7 @@ public class DBConnector {
 		return success;
 	}
 	
-	public static boolean addMessge(String receiverID, String senderID, String subject, String content)
+	public static boolean addMessage(int receiverID, int senderID, String subject, String content)
 	{
 		boolean success = true;
 		Statement s = createStatement(connection);
