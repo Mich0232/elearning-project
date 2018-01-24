@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.SystemColor;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -21,6 +23,7 @@ import javax.swing.border.LineBorder;
 
 import main.DBConnector;
 import models.User;
+import models.Task;
 
 public class StudentWindow {
 
@@ -47,6 +50,8 @@ public class StudentWindow {
 	private JLabel answerLabel;
 	private JButton refreshButton;
 	
+	private DBConnector db;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -69,7 +74,7 @@ public class StudentWindow {
 	 */
 	public StudentWindow(User logged) {
 		currentUser = logged;
-		DBConnector connector = new DBConnector();
+		db = new DBConnector();
 		initialize();
 		this.frame.setVisible(true);
 	}
@@ -173,17 +178,32 @@ public class StudentWindow {
         
        //---------- komponenty do 2 zak³adki
         
-        String[] answers = {"RED","BLUE","GREEN"};
-		SpinnerModel model = new SpinnerListModel(answers);
+//        String[] answers = {"RED","BLUE","GREEN"};
+		SpinnerModel model = new SpinnerListModel(db.getTasks(currentUser.group.toString()));
+		
 		answerSpinner = new JSpinner(model);
 		answerSpinner.setBounds(150, 11, 180, 26);
+//		answerSpinner.addChangeListener(new ChangeListener() {
+//
+//	        @Override
+//	        public void stateChanged(ChangeEvent e) {
+//	            LOG.info("value changed: " + spinner.getValue());
+//	        }
+//	    });
+		
+		
 		kartaZadania.add(answerSpinner);
 		
-		refreshButton = new JButton("Refresh");
+		refreshButton = new JButton("Select");
 		refreshButton.setBounds(330, 11, 100, 26);
+		refreshButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				answerLabel.setText(((Task)answerSpinner.getValue()).getContent());
+			}
+		});
 		kartaZadania.add(refreshButton);
-		
-		answerLabel = new JLabel("TESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTS");
+		answerLabel = new JLabel(((Task)answerSpinner.getValue()).getContent());
 		answerLabel.setVerticalAlignment(JLabel.TOP);
 		//answerLabel.setMinimumSize()
 		answerLabel.setBounds(10, 40, 500, 300);
