@@ -57,19 +57,33 @@ public class UserClient {
 			PrintWriter out = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));	
 				out.println(control);
 				out.flush();
+				
+				PrintWriter sendTask = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));	
+				sendTask.println(task);
+				sendTask.flush();
 			}catch(IOException e) {
 			 // TODO Auto-generated catch block
 				System.err.println(e);
 			}
-			
-		try{
-			PrintWriter out = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));	
-				out.println(task);
-				out.flush();
-			}catch(IOException e) {
-			 // TODO Auto-generated catch block
-				System.err.println(e);
-			}
+		
+		try {
+			Thread.sleep(50);
+		} catch (InterruptedException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		try {	
+			PrintWriter sendTask;
+			sendTask = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
+			sendTask.println(task);
+			sendTask.flush();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
+		
+	
 		
 	}
 

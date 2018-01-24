@@ -191,7 +191,7 @@ public class TeacherWindow {
         przyciskWyslijZadanie.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//LoginWindow.getClient().sendTask(tekstTresc.getText());
+				LoginWindow.getClient().sendTask(poleTrescZadania.getText());
 				tekst_tresc.setText("");
 			}
 		});

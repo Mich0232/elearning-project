@@ -203,8 +203,22 @@ public class DBConnector {
 		{
 			executeUpdate(s, "INSERT IGNORE INTO `elf_test`(`ID_Test`, `ID_Teacher`, `Group`) VALUES ('"+kolokwiumID+"','"+teacherID+"','"+group+"')");
 			
+			int questionNum=1;
+			Statement s2 = createStatement(connection);
+			ResultSet r = executeQuery(s2, "SELECT count(*)+1 from elf_questions where ID_Test='"+kolokwiumID+"'");
+			
+			try {
+				if(r.next())
+				{
+					questionNum = (int)r.getObject(1)+1;
+				}
+			}
+			catch (SQLException e) {
+				System.out.println("Nie ma takiego konta albo zle wprowadzono dane! " + e.getMessage() + ": " + e.getErrorCode());
+			}
+			
 			executeUpdate(s, "INSERT INTO `elf_questions`(`ID_Question`, `ID_Test`, `Content`) "
-					+ "VALUES ((SELECT count(*) from elf_questions where ID_Test='"+kolokwiumID+"',[value-2],[value-3])");
+					+ "VALUES ("+ questionNum + ",'"+kolokwiumID+"','"+question+"')");
 		}
 		catch (Exception e)
 		{
