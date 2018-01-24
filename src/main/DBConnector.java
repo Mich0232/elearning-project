@@ -251,7 +251,6 @@ public class DBConnector {
 	public static ArrayList<String> getGrades(int idStudent)
 	{
 		ArrayList<String> grades = new ArrayList<>();
-		System.out.println("ZGARNIAM OCENY");
 		Statement s = createStatement(connection);
 		ResultSet r = executeQuery(s, "SELECT ID_Test, Grade from elf_test_ans where ID_Student='"+idStudent+"';");
 		
@@ -338,7 +337,22 @@ public class DBConnector {
 		return success;
 	}
 	
-	
+	public static boolean sendTaskAns(int idStudent, String question, String ans)
+	{
+		boolean success = true;
+		Statement s = createStatement(connection);
+		try
+		{
+			executeUpdate(s, "INSERT INTO `elf_task_ans`(`ID_Student`, `ID_Task`, `Content`, `Grade`) "
+					+ "VALUES ('"+idStudent+"', (Select ID_Task from elf_task where Content='"+question+"')  , '"+ans+"','')");
+		}
+		catch (Exception e)
+		{
+			success=false;
+		}
+		
+		return success;
+	}
 	
 	
 	public DBConnector()
