@@ -225,6 +225,28 @@ public class DBConnector {
 		return taskList;
 	}
 	
+	public static List<Task> getTeacherTasks(String idTeacher)
+	{
+		List<Task> taskList = new ArrayList<Task>();
+		
+		Statement s = createStatement(connection);
+		ResultSet r = executeQuery(s, "Select elf_task.ID_Task, elf_task_ans.Content, elf_task.Group "
+				+ "from elf_task_ans JOIN elf_task ON elf_task.ID_Task=elf_task_ans.ID_Task where elf_task.ID_Teacher='"+idTeacher+"';");
+		
+		try {
+			while(r.next())
+			{
+				taskList.add(new Task((String)r.getObject(2), Integer.parseInt(idTeacher), (String)r.getObject(3)));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		for(int i=0; i<taskList.size(); i++)
+			System.out.println(i+") "+taskList.get(i));
+		return taskList;
+	}
 
 	public static boolean addTest(String teacherID, String kolokwiumID, String group, String question, String ans1, String ans2, String ans3, String ans4, String correct)
 
@@ -281,6 +303,8 @@ public class DBConnector {
 		
 		return success;
 	}
+	
+	
 	
 	
 	public DBConnector()

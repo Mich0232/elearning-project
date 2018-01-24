@@ -19,10 +19,13 @@ import java.awt.Dimension;
 import javax.swing.border.LineBorder;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
 import java.awt.SystemColor;
 import java.awt.Font;
+import java.util.List;
+
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 
@@ -344,16 +347,32 @@ public class TeacherWindow {
         list.setBounds(10, 11, 453, 262);
         kartaPodgladPrac.add(list);*/
 
-		String[] answers = {"RED","BLUE","GREEN"};
-		SpinnerModel model = new SpinnerListModel(answers);
-		answerSpinner = new JSpinner(model);
+		List<Task> answers = new ArrayList<Task>();
+		//SpinnerModel model = new SpinnerListModel(answers);
+		answerSpinner = new JSpinner();
 		answerSpinner.setBounds(150, 11, 180, 26);
 		kartaPodgladPrac.add(answerSpinner);
 		
 		refreshButton = new JButton("Refresh");
 		refreshButton.setBounds(330, 11, 100, 26);
 		kartaPodgladPrac.add(refreshButton);
-		
+		refreshButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				List<Task> answers = DBConnector.getTeacherTasks("1");
+				List<String> answerLabels = new ArrayList<>();
+				for(int i=0; i<answers.size(); i++)
+					answerLabels.add(answers.get(i).toString());
+				
+				if(answerLabels.size()==0)
+					answerLabels.add("EMPTY");
+				System.out.println(answerLabels.size());
+				SpinnerModel model = new SpinnerListModel(answerLabels);
+				answerSpinner.setVisible(false);
+				answerSpinner = new JSpinner(model);
+				answerSpinner.setBounds(150, 11, 180, 26);
+			}
+		});
 		answerLabel = new JLabel("TESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTSTESSTS");
 		answerLabel.setVerticalAlignment(JLabel.TOP);
 		answerLabel.setMinimumSize(new Dimension(0,0));
