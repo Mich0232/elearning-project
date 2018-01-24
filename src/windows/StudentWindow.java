@@ -219,7 +219,9 @@ public class StudentWindow {
 		selectButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				answerLabel.setText(((Task)answerSpinner.getValue()).getContent());
+				List<Task> taskList = db.getTasks(currentUser.group.toString());
+				if(taskList != null && !taskList.isEmpty())
+					answerLabel.setText(((Task)answerSpinner.getValue()).getContent());
 			}
 		});
 		kartaZadania.add(selectButton);
