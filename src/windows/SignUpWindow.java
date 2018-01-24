@@ -17,6 +17,7 @@ import java.awt.event.ActionListener;
 import javax.swing.SwingConstants;
 
 import main.DBConnector;
+import javax.swing.JSpinner;
 
 public class SignUpWindow {
 
@@ -165,6 +166,7 @@ public class SignUpWindow {
 		JLabel groupLabel = new JLabel("Grupa:");
 		groupLabel.setBounds(89, 271, 61, 16);
 		frame.getContentPane().add(groupLabel);
+		
 		
 		
 		comboBox.addActionListener (new ActionListener () {

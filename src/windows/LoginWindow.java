@@ -18,6 +18,8 @@ import javax.swing.JPasswordField;
 import javax.swing.JButton;
 import main.UserClient;
 
+import models.User;
+
 public class LoginWindow {
 
 	private JFrame frame;
@@ -25,6 +27,7 @@ public class LoginWindow {
 	private JPasswordField passwordField;
 	private JButton btnZarejestrujSi;
 	private static UserClient client;
+	private static User currentUser;
 
 
 	/**
@@ -67,17 +70,23 @@ public class LoginWindow {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			String accountType = DBConnector.checkLogin(loginField.getText(), passwordField.getText());
+			LoginWindow.currentUser = DBConnector.checkLogin(loginField.getText(), passwordField.getText());
 
-			
-			if(accountType.equals("Teacher"))
+			if(currentUser == null)
 			{
-				new TeacherWindow();
+				System.out.println("Brak danych uzytkownika");
+				return;
+			}
+			
+			
+			if(currentUser.accountType.equals("Teacher"))
+			{
+				new TeacherWindow(currentUser);
 				frame.dispose();
 			}
-			else if(accountType.equals("Student"))
+			else if(currentUser.accountType.equals("Student"))
 			{
-				new StudentWindow();
+				new StudentWindow(currentUser);
 				frame.dispose();
 			}
 			else

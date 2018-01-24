@@ -4,10 +4,15 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JSpinner;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import javax.swing.SpinnerListModel;
+import javax.swing.SpinnerModel;
+import javax.swing.SpinnerNumberModel;
+
 import java.awt.Color;
 import javax.swing.border.LineBorder;
 import javax.swing.JButton;
@@ -21,6 +26,7 @@ import javax.swing.JOptionPane;
 
 import main.DBConnector;
 import main.Kolokwium;
+import models.User;
 
 public class TeacherWindow {
 
@@ -60,7 +66,10 @@ public class TeacherWindow {
 	private JButton przyciskKoniec;
 	private JList list;
 	private JButton przyciskPobierzWszystkie;
+	private JSpinner answerSpinner;
 
+	private User currentUser;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -69,7 +78,7 @@ public class TeacherWindow {
 			@Override
 			public void run() {
 				try {
-					TeacherWindow window = new TeacherWindow();
+					TeacherWindow window = new TeacherWindow((new User("Testowy", "User", "Student", null, "Majca")));
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -81,7 +90,9 @@ public class TeacherWindow {
 	/**
 	 * Create the application.
 	 */
-	public TeacherWindow() {
+
+	public TeacherWindow(User logged) {
+		currentUser = logged;
 		DBConnector connector = new DBConnector();
 		initialize();
 		this.frame.setVisible(true);
@@ -110,8 +121,8 @@ public class TeacherWindow {
 		frame.getContentPane().add(infoPanel);
 		infoPanel.setLayout(null);
 		
-		JLabel Uzytkownik = new JLabel("U\u017Cytkownik:");
-		Uzytkownik.setBounds(10, 9, 79, 14);
+		JLabel Uzytkownik = new JLabel("User: "+currentUser.toString());
+		Uzytkownik.setBounds(10, 9, 200, 14);
 		infoPanel.add(Uzytkownik);
 		
 		daneUzytkownika = new JTextField();
@@ -205,6 +216,7 @@ public class TeacherWindow {
 				DBConnector.addTask("1", poleTrescZadania.getText(), poleGrupaTask.getText());
 				poleTrescZadania.setText("");
 				poleGrupaTask.setText("");
+
 			}
 		});
        
@@ -322,12 +334,18 @@ public class TeacherWindow {
         
         //------ komponenty do 3 zakładki
         
-        list = new JList();
+        /*list = new JList();
         list.setBounds(10, 11, 453, 262);
-        kartaPodgladPrac.add(list);
+        kartaPodgladPrac.add(list);*/
+
+		String[] answers = {"RED","BLUE","GREEN"};
+		SpinnerModel model = new SpinnerListModel(answers);
+		answerSpinner = new JSpinner(model);
+		answerSpinner.setBounds(150, 11, 180, 26);
+		kartaPodgladPrac.add(answerSpinner);
         
         przyciskPobierzWszystkie = new JButton("Pobierz wszystkie");
-        przyciskPobierzWszystkie.setBounds(157, 292, 148, 23);
+        przyciskPobierzWszystkie.setBounds(157, 260, 148, 23);
         kartaPodgladPrac.add(przyciskPobierzWszystkie);
        
       //------ komponenty do 4 zakładki
