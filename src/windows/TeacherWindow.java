@@ -212,8 +212,8 @@ public class TeacherWindow {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-				//LoginWindow.getClient().sendTask(poleTrescZadania.getText());
-				DBConnector.addTask("1", poleTrescZadania.getText(), poleGrupaTask.getText());
+				LoginWindow.getClient().sendTask(poleTrescZadania.getText());
+				//DBConnector.addTask("1", poleTrescZadania.getText(), poleGrupaTask.getText());
 				poleTrescZadania.setText("");
 				poleGrupaTask.setText("");
 
