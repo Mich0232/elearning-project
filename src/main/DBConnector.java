@@ -479,7 +479,7 @@ public class DBConnector {
 			System.out.println(" ... OK");
 		else
 			System.exit(1);
-		connection = connectToDatabase("jdbc:mysql://", "limitlessgames.pl", "limitlessgames", "limitlessgames", "toniehaslo765");
+		connection = connectToDatabase("jdbc:mysql://", "-", "-", "-", "-");
 		if (connection != null)
 			System.out.print(" polaczenie OK\n");
 	}
